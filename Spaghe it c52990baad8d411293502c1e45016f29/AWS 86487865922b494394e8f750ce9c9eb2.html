@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>RAM System variables</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>AWS</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -624,31 +624,4 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="a45743ab-77c2-492d-8419-10b2bb60d865" class="page sans"><header><h1 class="page-title">RAM System variables</h1></header><div class="page-body"><p id="d0b1e591-6095-4a55-bc7d-6bbe1929be8e" class="">Run this to get page file and physical memory details:</p><pre id="e145f7ee-51cf-481f-8964-a9f5234a2e4c" class="code"><code>$page = get-wmiobject Win32_pagefileusage ; $info = ($page.AllocatedBaseSize)-($page.CurrentUsage) ; write-host Unused page file space: $info out of $page.AllocatedBaseSize MBs
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB used out of {1}GB&quot; -f ((($_.freephysicalmemory)/1024)/1024), ((($_.totalvisiblememorysize)/1024)/1024)}</code></pre><p id="6e23e2b5-28fd-497d-8e85-7a5d58e66760" class="">and here is all the crap I wrote: </p><pre id="bad62ced-7c39-4bad-a472-875826c1dda8" class="code"><code>wmic  pagefile list full
-$avmem = systeminfo |find &quot;Available Physical Memory&quot;
-
-wmic pagefileset where name=&quot;C:\pagefile.sys&quot; set AllocatedBaseSize=2048
-
-
-Get-WmiObject win32_OperatingSystem |%{&quot;Total Physical Memory: {0}KB`nFree Physical Memory : {1}KB`nTotal Virtual Memory : {2}KB`nFree Virtual Memory  : {3}KB&quot; -f $_.totalvisiblememorysize, $_.freephysicalmemory, $_.totalvirtualmemorysize, $_.freevirtualmemory}
-
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}MB&quot; -f ($_.freephysicalmemory)/1024}
-
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB&quot; -f ((($_.freephysicalmemory)/1024)/1024)}
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB&quot; -f ((($_.totalvisiblememorysize)/1024)/1024)}
-get-wmiobject Win32_pagefileusage
-
-##This can be used to set the InitialSize and MaximumSize, however it only works after a reboot
-$page = get-wmiobject Win32_pagefileusage
-$newsize = ($page.CurrentUsage)+1000
-$computersys = Get-WmiObject Win32_ComputerSystem -EnableAllPrivileges;
-$computersys.AutomaticManagedPagefile = $False;
-$computersys.Put();
-$pagefile = Get-WmiObject -Query &quot;Select * From Win32_PageFileSetting Where Name like &#x27;%pagefile.sys&#x27;&quot;;
-$pagefile.InitialSize = $newsize;
-$pagefile.MaximumSize = $newsize;
-$pagefile.AllocatedBaseSize = $newsize;
-$pagefile.Put();
-
-$page = get-wmiobject Win32_pagefileusage ; $info = ($page.AllocatedBaseSize)-($page.CurrentUsage) ; $info</code></pre></div></article></body></html>
+</style></head><body><article id="86487865-922b-4943-94e8-f750ce9c9eb2" class="page sans"><header><h1 class="page-title">AWS</h1></header><div class="page-body"><figure id="f5366bf2-8a3c-4176-a8b6-f765f9a2a66b" class="link-to-page"><a href="AWS%2086487865922b494394e8f750ce9c9eb2/AWS%20Amplify%20f5366bf28a3c4176a8b6f765f9a2a66b.html">AWS Amplify</a></figure></div></article></body></html>

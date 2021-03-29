@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>RAM System variables</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>List disks</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -624,31 +624,9 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="a45743ab-77c2-492d-8419-10b2bb60d865" class="page sans"><header><h1 class="page-title">RAM System variables</h1></header><div class="page-body"><p id="d0b1e591-6095-4a55-bc7d-6bbe1929be8e" class="">Run this to get page file and physical memory details:</p><pre id="e145f7ee-51cf-481f-8964-a9f5234a2e4c" class="code"><code>$page = get-wmiobject Win32_pagefileusage ; $info = ($page.AllocatedBaseSize)-($page.CurrentUsage) ; write-host Unused page file space: $info out of $page.AllocatedBaseSize MBs
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB used out of {1}GB&quot; -f ((($_.freephysicalmemory)/1024)/1024), ((($_.totalvisiblememorysize)/1024)/1024)}</code></pre><p id="6e23e2b5-28fd-497d-8e85-7a5d58e66760" class="">and here is all the crap I wrote: </p><pre id="bad62ced-7c39-4bad-a472-875826c1dda8" class="code"><code>wmic  pagefile list full
-$avmem = systeminfo |find &quot;Available Physical Memory&quot;
-
-wmic pagefileset where name=&quot;C:\pagefile.sys&quot; set AllocatedBaseSize=2048
-
-
-Get-WmiObject win32_OperatingSystem |%{&quot;Total Physical Memory: {0}KB`nFree Physical Memory : {1}KB`nTotal Virtual Memory : {2}KB`nFree Virtual Memory  : {3}KB&quot; -f $_.totalvisiblememorysize, $_.freephysicalmemory, $_.totalvirtualmemorysize, $_.freevirtualmemory}
-
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}MB&quot; -f ($_.freephysicalmemory)/1024}
-
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB&quot; -f ((($_.freephysicalmemory)/1024)/1024)}
-Get-WmiObject win32_OperatingSystem |%{&quot;{0}GB&quot; -f ((($_.totalvisiblememorysize)/1024)/1024)}
-get-wmiobject Win32_pagefileusage
-
-##This can be used to set the InitialSize and MaximumSize, however it only works after a reboot
-$page = get-wmiobject Win32_pagefileusage
-$newsize = ($page.CurrentUsage)+1000
-$computersys = Get-WmiObject Win32_ComputerSystem -EnableAllPrivileges;
-$computersys.AutomaticManagedPagefile = $False;
-$computersys.Put();
-$pagefile = Get-WmiObject -Query &quot;Select * From Win32_PageFileSetting Where Name like &#x27;%pagefile.sys&#x27;&quot;;
-$pagefile.InitialSize = $newsize;
-$pagefile.MaximumSize = $newsize;
-$pagefile.AllocatedBaseSize = $newsize;
-$pagefile.Put();
-
-$page = get-wmiobject Win32_pagefileusage ; $info = ($page.AllocatedBaseSize)-($page.CurrentUsage) ; $info</code></pre></div></article></body></html>
+</style></head><body><article id="c7a5b308-2b33-40d5-a226-4c3873b6ee40" class="page sans"><header><h1 class="page-title">List disks</h1></header><div class="page-body"><p id="792389e4-4483-4dc5-8721-35910c94f562" class="">There are a couple ways to list the block storage devices</p><h2 id="e2f2ed35-d73e-485f-afd0-058980ec7343" class="">lsblk</h2><p id="4348a620-628e-47f7-9566-bb47cd7a3a9c" class="">This will allow you to easily see all of the block devices in a simple way</p><pre id="d4a4d76e-b1c6-45a6-842b-b75ca5365bbe" class="code"><code>lsblk
+##list details for just one of the disks
+lsblk /dev/sdb</code></pre><p id="617e31f1-db19-4977-a7f1-ec676874cce8" class="">additionally you can also use this to list the filesystems in addition to the block devices</p><pre id="c8bd7ca5-3581-48ee-b14d-9e22629af4bd" class="code"><code>lsblk -f</code></pre><h2 id="229cd47d-1335-4a57-aeec-2297763bf519" class="">fdisk</h2><p id="16ae930b-a33f-43d1-b83a-5706086c4e38" class="">fdisk can also be used for creating partitions </p><p id="0de90935-5b21-4168-886b-1d5aef2bcfe4" class="">This will list the details of all of the disks available to the system.</p><pre id="b4d7caa6-1aee-4fb5-b7f1-f85b9abe7f13" class="code"><code>sudo fdisk -l
+##list details for just one of the disks
+sudo fdisk -l /dev/sdb</code></pre><p id="1e34f886-e2cb-4487-8cac-09d872375796" class="">
+</p></div></article></body></html>

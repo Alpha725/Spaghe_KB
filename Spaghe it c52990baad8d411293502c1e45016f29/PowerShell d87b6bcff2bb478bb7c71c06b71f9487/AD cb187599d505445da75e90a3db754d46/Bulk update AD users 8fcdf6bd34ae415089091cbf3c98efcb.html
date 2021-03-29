@@ -624,12 +624,12 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="8fcdf6bd-34ae-4150-8909-1cbf3c98efcb" class="page sans"><header><h1 class="page-title">Bulk update AD users</h1></header><div class="page-body"><p id="289c3dd3-df2f-458a-adc2-1419226afaf3" class="">This script takes a user and uses their OU to the bulk update a property or a list of properties.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="132ce840-5a71-482b-9088-2b0ec995343a" class="code"><code><span class="token variable">$ExampleUser</span> = <span class="token string">'[example_username_from_OU_you_want_to_update]'</span>
-<span class="token variable">$OUUser</span> = <span class="token function">Get-ADUser</span> <span class="token operator">-</span>Identity <span class="token variable">$ExampleUser</span> <span class="token operator">-</span>Properties <span class="token operator">*</span>
-<span class="token variable">$OU</span> =<span class="token variable">$OUUser</span><span class="token punctuation">.</span>DistinguishedName<span class="token punctuation">.</span>Substring<span class="token punctuation">(</span><span class="token variable">$OUUser</span><span class="token punctuation">.</span>DistinguishedName<span class="token punctuation">.</span>IndexOf<span class="token punctuation">(</span><span class="token string">"OU="</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">Foreach</span> <span class="token punctuation">(</span><span class="token variable">$User</span> in <span class="token variable">$OU</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-	<span class="token function">Set-ADUser</span> <span class="token operator">-</span>Identity <span class="token variable">$User</span> <span class="token operator">-</span><span class="token namespace">[Property]</span> <span class="token namespace">[Value]</span>
-<span class="token punctuation">}</span>
-<span class="token keyword">Foreach</span> <span class="token punctuation">(</span><span class="token variable">$User</span> in <span class="token variable">$OU</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-	<span class="token function">get-ADUser</span> <span class="token operator">-</span>Identity <span class="token variable">$User</span> <span class="token operator">-</span>Property <span class="token variable">$User</span><span class="token punctuation">.</span>name
-<span class="token punctuation">}</span></code></pre><p id="07bffe15-eb6b-476d-8acc-d306719330d4" class="">Plans for the future. </p><ul id="1228bb92-c6f0-45f0-9950-94d054500d94" class="bulleted-list"><li>Add a listing function to the script that asks for properties and their values </li></ul></div></article></body></html>
+</style></head><body><article id="8fcdf6bd-34ae-4150-8909-1cbf3c98efcb" class="page sans"><header><h1 class="page-title">Bulk update AD users</h1></header><div class="page-body"><p id="289c3dd3-df2f-458a-adc2-1419226afaf3" class="">This script takes a user and uses their OU to the bulk update a property or a list of properties.</p><pre id="132ce840-5a71-482b-9088-2b0ec995343a" class="code"><code>$ExampleUser = &#x27;[example_username_from_OU_you_want_to_update]&#x27;
+$OUUser = Get-ADUser -Identity $ExampleUser -Properties *
+$OU =$OUUser.DistinguishedName.Substring($OUUser.DistinguishedName.IndexOf(&quot;OU=&quot;))
+Foreach ($User in $OU){
+	Set-ADUser -Identity $User -[Property] [Value]
+}
+Foreach ($User in $OU){
+	get-ADUser -Identity $User -Property $User.name
+}</code></pre><p id="07bffe15-eb6b-476d-8acc-d306719330d4" class="">Plans for the future. </p><ul id="1228bb92-c6f0-45f0-9950-94d054500d94" class="bulleted-list"><li>Add a listing function to the script that asks for properties and their values </li></ul></div></article></body></html>

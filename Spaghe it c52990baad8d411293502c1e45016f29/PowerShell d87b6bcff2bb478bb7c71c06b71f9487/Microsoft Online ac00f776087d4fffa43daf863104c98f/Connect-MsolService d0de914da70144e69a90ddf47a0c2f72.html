@@ -624,10 +624,10 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="d0de914d-a701-44e6-9a90-ddf47a0c2f72" class="page sans"><header><h1 class="page-title">Connect-MsolService</h1></header><div class="page-body"><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="5fdc43fd-3f00-4e19-91ec-9d152719091c" class="code"><code><span class="token variable">$AdminUsername</span> = <span class="token function">Read-Host</span> <span class="token operator">-</span>Prompt <span class="token string">"Azure/Office 365 Admin User Account"</span>
-<span class="token variable">$AdminPassword</span> = <span class="token function">Read-Host</span> <span class="token operator">-</span>Prompt <span class="token string">"Password"</span> <span class="token operator">-</span>AsSecureString
-<span class="token variable">$adminCredentials</span> = <span class="token function">New-Object</span> <span class="token operator">-</span>TypeName System<span class="token punctuation">.</span>Management<span class="token punctuation">.</span>Automation<span class="token punctuation">.</span>PSCredential <span class="token operator">-</span>argumentlist <span class="token variable">$AdminUsername</span><span class="token punctuation">,</span> <span class="token variable">$AdminPassword</span>
-Login<span class="token operator">-</span>AzureRmAccount <span class="token operator">-</span>Credential <span class="token variable">$adminCredentials</span>
-<span class="token function">Install-Module</span> MSOnline
-<span class="token function">Connect-MsolService</span>
-<span class="token function">Get-MsolPartnerContract</span> <span class="token operator">-</span>All <span class="token punctuation">|</span> <span class="token function">Select-Object</span> DefaultDomainName<span class="token punctuation">,</span>TenantId <span class="token punctuation">|</span><span class="token function">format-table</span></code></pre></div></article></body></html>
+</style></head><body><article id="d0de914d-a701-44e6-9a90-ddf47a0c2f72" class="page sans"><header><h1 class="page-title">Connect-MsolService</h1></header><div class="page-body"><pre id="5fdc43fd-3f00-4e19-91ec-9d152719091c" class="code"><code>$AdminUsername = Read-Host -Prompt &quot;Azure/Office 365 Admin User Account&quot;
+$AdminPassword = Read-Host -Prompt &quot;Password&quot; -AsSecureString
+$adminCredentials = New-Object -TypeName System.Management.Automation.PSCredential -argumentlist $AdminUsername, $AdminPassword
+Login-AzureRmAccount -Credential $adminCredentials
+Install-Module MSOnline
+Connect-MsolService
+Get-MsolPartnerContract -All | Select-Object DefaultDomainName,TenantId |format-table</code></pre></div></article></body></html>

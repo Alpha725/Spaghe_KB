@@ -624,11 +624,11 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="d5e91d74-b08f-4d1f-8294-458541b1f6cd" class="page sans"><header><h1 class="page-title">Add users to group from CSV</h1></header><div class="page-body"><p id="07d83dd1-0950-4678-8e5b-d6b82f467dfe" class="">Script needs to be updated before you run it. </p><ul id="fc2c3b1f-05b5-47ef-91a9-3015091eafa3" class="bulleted-list"><li>group name in the group variable</li></ul><ul id="b686e7c9-562c-4332-a1ea-ebda91e5107d" class="bulleted-list"><li>File path to CSV</li></ul><p id="5811ccaf-cb4f-46b2-891e-7230dcb8f868" class="">The CSV should be created with the table name being name with all of the users full names in that column.</p><p id="c04b9f48-fa90-4d7f-b74e-d4f909f09673" class="">Once entered run:</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="cd6724c9-c6bf-4a6e-bc38-aa86b8ec70a0" class="code"><code><span class="token variable">$group</span> = <span class="token string">"put group name here"</span>
-<span class="token variable">$ADUsers</span> = <span class="token function">Import-csv</span> <span class="token string">"put csv file location here"</span>
-<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$user</span> in <span class="token variable">$ADUsers</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token variable">$username</span> = <span class="token variable">$user</span><span class="token punctuation">.</span>name 
-	<span class="token function">echo</span> <span class="token string">"Getting details for <span class="token variable">$username</span>"</span>
-	<span class="token variable">$get</span> = <span class="token function">Get-AdUser</span> <span class="token operator">-</span><span class="token keyword">filter</span> <span class="token punctuation">{</span>name <span class="token operator">-eq</span> <span class="token variable">$username</span><span class="token punctuation">}</span>
-	<span class="token variable">$get</span> <span class="token punctuation">|</span> <span class="token function">Add-ADGroupMember</span> <span class="token operator">-</span>Identity <span class="token variable">$group</span>
-<span class="token punctuation">}</span></code></pre></div></article></body></html>
+</style></head><body><article id="d5e91d74-b08f-4d1f-8294-458541b1f6cd" class="page sans"><header><h1 class="page-title">Add users to group from CSV</h1></header><div class="page-body"><p id="07d83dd1-0950-4678-8e5b-d6b82f467dfe" class="">Script needs to be updated before you run it. </p><ul id="fc2c3b1f-05b5-47ef-91a9-3015091eafa3" class="bulleted-list"><li>group name in the group variable</li></ul><ul id="b686e7c9-562c-4332-a1ea-ebda91e5107d" class="bulleted-list"><li>File path to CSV</li></ul><p id="5811ccaf-cb4f-46b2-891e-7230dcb8f868" class="">The CSV should be created with the table name being name with all of the users full names in that column.</p><p id="c04b9f48-fa90-4d7f-b74e-d4f909f09673" class="">Once entered run:</p><pre id="cd6724c9-c6bf-4a6e-bc38-aa86b8ec70a0" class="code"><code>$group = &quot;put group name here&quot;
+$ADUsers = Import-csv &quot;put csv file location here&quot;
+foreach ($user in $ADUsers) {
+	$username = $user.name 
+	echo &quot;Getting details for $username&quot;
+	$get = Get-AdUser -filter {name -eq $username}
+	$get | Add-ADGroupMember -Identity $group
+}</code></pre></div></article></body></html>

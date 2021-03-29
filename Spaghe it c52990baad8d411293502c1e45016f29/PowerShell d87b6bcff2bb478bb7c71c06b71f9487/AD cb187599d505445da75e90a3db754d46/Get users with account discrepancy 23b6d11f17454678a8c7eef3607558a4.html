@@ -624,19 +624,19 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="23b6d11f-1745-4678-a8c7-eef3607558a4" class="page sans"><header><h1 class="page-title">Get users with account discrepancy</h1></header><div class="page-body"><p id="338e2369-3c9c-4860-bbd1-85667c609052" class="">This command looks for users that have different Job title and Description.</p><p id="331b117d-ed8d-4f0c-b68e-5b2f8f308a35" class="">This is something that is for teams as teams displays description instead of job title.</p><p id="0ae06337-e1ea-4edb-8794-58dd03923694" class="">You can easily replace Description and Title with any other user properties 😉</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="13fc0e5d-b02e-46a1-809b-27f93e29b75f" class="code"><code><span class="token variable">$users</span> = <span class="token function">get-aduser</span> <span class="token operator">-</span><span class="token keyword">filter</span> <span class="token punctuation">{</span>enabled <span class="token operator">-eq</span> <span class="token boolean">$true</span><span class="token punctuation">}</span> <span class="token operator">-</span>Properties Description<span class="token punctuation">,</span>Title<span class="token punctuation">,</span>name
-<span class="token function">echo</span> <span class="token string">"name,title,description"</span> >> User_title_issues<span class="token punctuation">.</span>csv
-<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$user</span> in <span class="token variable">$users</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token variable">$name</span> = <span class="token variable">$user</span><span class="token punctuation">.</span>name
-	<span class="token variable">$description</span> = <span class="token variable">$user</span><span class="token punctuation">.</span>Description
-	<span class="token variable">$title</span> = <span class="token variable">$user</span><span class="token punctuation">.</span>Title
-	<span class="token keyword">If</span> <span class="token punctuation">(</span><span class="token variable">$description</span> <span class="token operator">-eq</span> <span class="token variable">$title</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-		<span class="token variable">$x</span> = 0
-	<span class="token punctuation">}</span> <span class="token keyword">Else</span><span class="token punctuation">{</span>
-		<span class="token keyword">If</span> <span class="token punctuation">(</span><span class="token variable">$description</span> <span class="token operator">-eq</span> <span class="token variable">$null</span> <span class="token operator">-or</span> <span class="token variable">$title</span> <span class="token operator">-eq</span> <span class="token variable">$null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-			<span class="token variable">$x</span> = 0
-		<span class="token punctuation">}</span> <span class="token keyword">Else</span> <span class="token punctuation">{</span>
-			<span class="token function">echo</span> <span class="token string">"<span class="token variable">$name</span>,<span class="token variable">$title</span>,<span class="token variable">$description</span>"</span> >> User_title_issues<span class="token punctuation">.</span>csv
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre></div></article></body></html>
+</style></head><body><article id="23b6d11f-1745-4678-a8c7-eef3607558a4" class="page sans"><header><h1 class="page-title">Get users with account discrepancy</h1></header><div class="page-body"><p id="338e2369-3c9c-4860-bbd1-85667c609052" class="">This command looks for users that have different Job title and Description.</p><p id="331b117d-ed8d-4f0c-b68e-5b2f8f308a35" class="">This is something that is for teams as teams displays description instead of job title.</p><p id="0ae06337-e1ea-4edb-8794-58dd03923694" class="">You can easily replace Description and Title with any other user properties 😉</p><pre id="13fc0e5d-b02e-46a1-809b-27f93e29b75f" class="code"><code>$users = get-aduser -filter {enabled -eq $true} -Properties Description,Title,name
+echo &quot;name,title,description&quot; &gt;&gt; User_title_issues.csv
+foreach ($user in $users) {
+	$name = $user.name
+	$description = $user.Description
+	$title = $user.Title
+	If ($description -eq $title){
+		$x = 0
+	} Else{
+		If ($description -eq $null -or $title -eq $null){
+			$x = 0
+		} Else {
+			echo &quot;$name,$title,$description&quot; &gt;&gt; User_title_issues.csv
+		}
+	}
+}</code></pre></div></article></body></html>

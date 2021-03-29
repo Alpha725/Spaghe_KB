@@ -624,10 +624,10 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="20ef0d02-fdc2-4a15-b3ca-1ea18a6edba2" class="page sans"><header><h1 class="page-title">Add trusted sites</h1></header><div class="page-body"><p id="d6256caf-173d-45af-8a30-960b04c03159" class="">The below is a rough script at add sites to trusted locally, GPO makes it meaningless but here it is.</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4d6aef7c-c4aa-4694-9299-3adf20a34d50" class="code"><code><span class="token function">Set-Location</span> <span class="token string">"HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings"</span> 
-<span class="token function">Set-Location</span> ZoneMap\Domains 
-<span class="token function">New-Item</span> <span class="token namespace">[website domain]</span>
-<span class="token function">Set-Location</span> <span class="token namespace">[website domain]</span>
-<span class="token function">New-Item</span> <span class="token operator">*</span> 
-<span class="token function">Set-Location</span> <span class="token operator">*</span> 
-<span class="token function">New-ItemProperty</span> <span class="token punctuation">.</span> <span class="token operator">-</span>Name http <span class="token operator">-</span>Value 2 <span class="token operator">-</span><span class="token function">Type</span> DWORD</code></pre></div></article></body></html>
+</style></head><body><article id="20ef0d02-fdc2-4a15-b3ca-1ea18a6edba2" class="page sans"><header><h1 class="page-title">Add trusted sites</h1></header><div class="page-body"><p id="d6256caf-173d-45af-8a30-960b04c03159" class="">The below is a rough script at add sites to trusted locally, GPO makes it meaningless but here it is.</p><pre id="4d6aef7c-c4aa-4694-9299-3adf20a34d50" class="code"><code>Set-Location &quot;HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot; 
+Set-Location ZoneMap\Domains 
+New-Item [website domain]
+Set-Location [website domain]
+New-Item * 
+Set-Location * 
+New-ItemProperty . -Name http -Value 2 -Type DWORD</code></pre></div></article></body></html>

@@ -624,15 +624,15 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="3d6d238d-f0cd-4609-83b0-5cdbf4dac610" class="page sans"><header><h1 class="page-title">Get all distribution groups and their members</h1></header><div class="page-body"><p id="e7f296fa-83c0-45f6-b1c5-14805623f76a" class="">This script will create a csv for every distribution group and fill that csv with its assigned users</p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="07d28ee2-4b00-4dda-96dc-aac64de1fc0c" class="code"><code><span class="token variable">$all_groups</span> = <span class="token function">Get-ADGroup</span> <span class="token operator">-</span><span class="token keyword">Filter</span> <span class="token operator">*</span> <span class="token operator">-</span>Properties mail
-<span class="token variable">$mail_groups</span> = <span class="token string">""</span>
-<span class="token keyword">foreach</span> <span class="token punctuation">(</span><span class="token variable">$group</span> in <span class="token variable">$all_groups</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">$group</span><span class="token punctuation">.</span>mail <span class="token operator">-eq</span> <span class="token variable">$null</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
-		<span class="token variable">$x</span> = 0
-	<span class="token punctuation">}</span> <span class="token keyword">Else</span> <span class="token punctuation">{</span>
-		<span class="token variable">$name</span> = <span class="token variable">$group</span><span class="token punctuation">.</span>mail
-		<span class="token variable">$members</span> = <span class="token function">Get-ADGroupMember</span> <span class="token operator">-</span>Identity <span class="token variable">$group</span>
-		<span class="token variable">$members</span> <span class="token punctuation">|</span> <span class="token function">select-object</span> name <span class="token punctuation">|</span> <span class="token function">export-csv</span> <span class="token operator">-</span>path <span class="token string">"c:\temp\<span class="token variable">$name</span>.csv"</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre><p id="24a3970a-d0d7-44e5-8090-8886e65dc60d" class="">
+</style></head><body><article id="3d6d238d-f0cd-4609-83b0-5cdbf4dac610" class="page sans"><header><h1 class="page-title">Get all distribution groups and their members</h1></header><div class="page-body"><p id="e7f296fa-83c0-45f6-b1c5-14805623f76a" class="">This script will create a csv for every distribution group and fill that csv with its assigned users</p><pre id="07d28ee2-4b00-4dda-96dc-aac64de1fc0c" class="code"><code>$all_groups = Get-ADGroup -Filter * -Properties mail
+$mail_groups = &quot;&quot;
+foreach ($group in $all_groups) {
+	if ($group.mail -eq $null){
+		$x = 0
+	} Else {
+		$name = $group.mail
+		$members = Get-ADGroupMember -Identity $group
+		$members | select-object name | export-csv -path &quot;c:\temp\$name.csv&quot;
+	}
+}</code></pre><p id="24a3970a-d0d7-44e5-8090-8886e65dc60d" class="">
 </p></div></article></body></html>

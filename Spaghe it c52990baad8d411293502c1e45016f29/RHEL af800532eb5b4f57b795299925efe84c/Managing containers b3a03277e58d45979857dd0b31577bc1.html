@@ -625,70 +625,70 @@ blockquote {
 }
 	
 </style></head><body><article id="b3a03277-e58d-4597-9857-dd0b31577bc1" class="page sans"><header><h1 class="page-title">Managing containers</h1></header><div class="page-body"><h2 id="b2bba491-fc09-4ee9-baad-e4c649dd28e2" class="">Overview </h2><ul id="21f7f7c1-d1fe-470a-b208-3a03ee2e11c3" class="bulleted-list"><li>Find and retrieve container images from a remote registory </li></ul><ul id="67d49782-ee91-4de3-8927-a7d85c8336f0" class="bulleted-list"><li>Inspect containers </li></ul><ul id="e0be2258-81e4-4ccd-87a4-df5e361989fc" class="bulleted-list"><li>Perform container management using commands such as:<ul id="22dac258-521e-4256-9a6d-04e969f4c148" class="bulleted-list"><li>podman </li></ul><ul id="f1dca301-7678-4205-8d29-26cafe792957" class="bulleted-list"><li>skepeo</li></ul></li></ul><h2 id="b87421dc-2c38-4153-89ad-5f6d49c40d7e" class="">Commands: </h2><ul id="cf8f5ef3-6924-44e1-9844-d42d5475b5b2" class="bulleted-list"><li>Podman <ul id="ba646a59-c315-496c-aa14-e08e05dcf58e" class="bulleted-list"><li>Used to directly manage containers and container images </li></ul></li></ul><ul id="54ebc5d5-9083-4307-82a6-6f44d0e9573d" class="bulleted-list"><li>skopeo <ul id="39d6d28b-5ff5-426a-b95a-f4af470189ef" class="bulleted-list"><li>used to inspect copy delete and sign container images </li></ul></li></ul><ul id="96d632cf-eddc-4293-8e79-e7b5c7c8f35e" class="bulleted-list"><li>buildah <ul id="d5675f80-cfb4-4224-8101-03d99ec98aca" class="bulleted-list"><li>used to create new container images</li></ul></li></ul><h2 id="957d52a6-00e3-4467-87cf-ce686111ecda" class="">Container registries:
-</h2><ul id="f7eb9a5f-f7d9-40a6-b76a-239b1dea8904" class="bulleted-list"><li>registory.redhat.io     (RedHat internal)</li></ul><ul id="0b3fb1cf-8d6d-49d1-97ed-96947875e064" class="bulleted-list"><li>registory.connect.redhat.com        (RedHat community images)</li></ul><p id="804082d6-aa7d-4fb4-9b8a-d6685171c31c" class="">Configuration: /etc/containers/regitories.conf</p><p id="636abcab-ee53-406c-8d6d-6ee23fbb65d2" class="">Example: </p><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="50bf70f8-c279-4504-9a1a-a03517cdb08d" class="code"><code><span class="token function">sudo</span> yum -y module list --avaliable container-tools
-<span class="token function">sudo</span> yum -y module <span class="token function">install</span> container-tools
-podman --help <span class="token operator">|</span> <span class="token function">less</span>
-podman info <span class="token operator">|</span> <span class="token function">less</span>
+</h2><ul id="f7eb9a5f-f7d9-40a6-b76a-239b1dea8904" class="bulleted-list"><li>registory.redhat.io     (RedHat internal)</li></ul><ul id="0b3fb1cf-8d6d-49d1-97ed-96947875e064" class="bulleted-list"><li>registory.connect.redhat.com        (RedHat community images)</li></ul><p id="804082d6-aa7d-4fb4-9b8a-d6685171c31c" class="">Configuration: /etc/containers/regitories.conf</p><p id="636abcab-ee53-406c-8d6d-6ee23fbb65d2" class="">Example: </p><pre id="50bf70f8-c279-4504-9a1a-a03517cdb08d" class="code"><code>sudo yum -y module list --avaliable container-tools
+sudo yum -y module install container-tools
+podman --help | less
+podman info | less
 podman login registry.access.redhat.com
-podman search registry.access.redhat.com/ubi8 <span class="token operator">|</span> <span class="token function">less</span>
+podman search registry.access.redhat.com/ubi8 | less
 podman pull registry.access.redhat.com/ubi8/ubi:latest
 podman images
-skopeo inspect docker://registry.access.redhat.com/ubi8/ubi:latest <span class="token operator">|</span> <span class="token function">less</span>
+skopeo inspect docker://registry.access.redhat.com/ubi8/ubi:latest | less
 podman images
 podman run -it registry.access.redhat.com/ubi8/ubi:latest
-	now <span class="token keyword">in</span> the docker
-	<span class="token function">cat</span> /etc/redhat-release
-	<span class="token builtin class-name">exit</span>
-podman <span class="token function">ps</span> --all 
-podman <span class="token function">rm</span> -a 
-podman <span class="token function">ps</span> --all 
+	now in the docker
+	cat /etc/redhat-release
+	exit
+podman ps --all 
+podman rm -a 
+podman ps --all 
 podman images
 podman rmi registry.access.redhat.com/ubi8/ubi:latest
 podman images</code></pre><h2 id="6174289f-a8e4-46e5-859e-cd8b2889dfdd" class="">Basic Operations </h2><p id="bd291b3c-a111-4859-acf4-88fee54c5ef6" class="">
-</p><ul id="247804e6-5517-4d11-a4c3-7dd7400a2a7c" class="bulleted-list"><li>find and retrieve container images from a remote registry</li></ul><ul id="fa8dede1-e530-4959-a13c-a58b38b7de20" class="bulleted-list"><li>inspect container images</li></ul><ul id="51a446a1-48e5-497e-abdb-c2d15cde78e8" class="bulleted-list"><li>Perform basic container management such as running, starting, stopping, and listing running containers</li></ul><ul id="8fe19b9f-899c-4e71-bf05-9f48612d5061" class="bulleted-list"><li>Perform container management using commands such as podman and skopeo</li></ul><ul id="250c3ce2-d492-475c-aac0-c1bcee01e833" class="bulleted-list"><li>Run a service inside a container</li></ul><ul id="aad013c3-3ea1-4455-a07f-f6da0bd62723" class="bulleted-list"><li>Attach persistent storage to a container</li></ul><h2 id="82d3d2db-85e9-44ec-b72f-ff7750e3fc5d" class="">Example: </h2><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="4e84b154-f657-441f-b82e-9fa5f762d91f" class="code"><code>skopeo inspect docker://registry.access.redhat.com/rhscl/httpd-24-rhel7 <span class="token operator">|</span> <span class="token function">less</span> 
-podman run -d -p <span class="token number">8000</span>:8000 docker://registry.access.redhat.com/rhscl/httpd-24-rhel7
-podman <span class="token function">ps</span> -a
-<span class="token function">curl</span> http://127.0.0.1:8000
+</p><ul id="247804e6-5517-4d11-a4c3-7dd7400a2a7c" class="bulleted-list"><li>find and retrieve container images from a remote registry</li></ul><ul id="fa8dede1-e530-4959-a13c-a58b38b7de20" class="bulleted-list"><li>inspect container images</li></ul><ul id="51a446a1-48e5-497e-abdb-c2d15cde78e8" class="bulleted-list"><li>Perform basic container management such as running, starting, stopping, and listing running containers</li></ul><ul id="8fe19b9f-899c-4e71-bf05-9f48612d5061" class="bulleted-list"><li>Perform container management using commands such as podman and skopeo</li></ul><ul id="250c3ce2-d492-475c-aac0-c1bcee01e833" class="bulleted-list"><li>Run a service inside a container</li></ul><ul id="aad013c3-3ea1-4455-a07f-f6da0bd62723" class="bulleted-list"><li>Attach persistent storage to a container</li></ul><h2 id="82d3d2db-85e9-44ec-b72f-ff7750e3fc5d" class="">Example: </h2><pre id="4e84b154-f657-441f-b82e-9fa5f762d91f" class="code"><code>skopeo inspect docker://registry.access.redhat.com/rhscl/httpd-24-rhel7 | less 
+podman run -d -p 8000:8000 docker://registry.access.redhat.com/rhscl/httpd-24-rhel7
+podman ps -a
+curl http://127.0.0.1:8000
 podman stop -a
-podman <span class="token function">ps</span> -a
+podman ps -a
 podman run -it registry.access.redhat.com/rhscl/httpd-24-rhel7 /bin/bash
-	<span class="token function">cat</span> /etc/rhel-release
-	<span class="token builtin class-name">exit</span>
-podman <span class="token function">ps</span> -a
+	cat /etc/rhel-release
+	exit
+podman ps -a
 podman run -d --name test-container  docker:registry.access.redhat.com/rhscl/httpd-24-rhel7
-podman <span class="token builtin class-name">exec</span> -it test-container <span class="token function">cat</span> /etc/rhel-release
+podman exec -it test-container cat /etc/rhel-release
 podman stop test-container
-podman <span class="token function">ps</span> -a 
-<span class="token function">mkdir</span> ~/web_data
-<span class="token builtin class-name">echo</span> <span class="token string">"Test data"</span> <span class="token operator">></span> ~/web_data/test.txt
-<span class="token function">cat</span> <span class="token string">"Test data"</span> <span class="token operator">></span> ~/web_data/test.txt
-podman run -d --name web_container -p <span class="token number">8000</span>:8000 -v ~/web_data:/var/www/html:Z registry.access.redhat.com/rhscl/httpd-24-rhel7
-podman <span class="token function">ps</span> -a 
-<span class="token function">curl</span> http://127.0.0.1:8000/test.txt
-podman <span class="token function">ps</span> -a 
+podman ps -a 
+mkdir ~/web_data
+echo &quot;Test data&quot; &gt; ~/web_data/test.txt
+cat &quot;Test data&quot; &gt; ~/web_data/test.txt
+podman run -d --name web_container -p 8000:8000 -v ~/web_data:/var/www/html:Z registry.access.redhat.com/rhscl/httpd-24-rhel7
+podman ps -a 
+curl http://127.0.0.1:8000/test.txt
+podman ps -a 
 podman stop -a 
-podman <span class="token function">rm</span> -a 
-podman <span class="token function">ps</span> -a</code></pre><p id="e947d4a0-1eda-4cdb-a26f-347de735f51b" class="">Managing containers on RHEL 8 using podman - Advanced operations find and retrieve container images from a remote registry perform container management using commands such as podman and skopeo perform basic container management such as running , starting, stopping and listing running containers Run a service inside of a container Configure a container to start automatically as a systemd service Attach persistent storage to a container</p><p id="951c592a-dfe3-4584-8db2-c5a8b04265fd" class="">Commands: podman run -d -name Launch a new container to use as a model to generate the systemd unit files podman generate systemd Generate systemd unit file from your container. Must delete the container as systemd will create one new one podman stop|rm  Get rid of the container you created before you try to start your systemd container systemd commands: loginctl enable-linger loginctl disable-linger loginctl show-user  systemctl –user daemon-reload systemctl –user start|stop|enable UNIT Unit files: ~/.config/systemd/user/</p><h2 id="91d2b4cb-ac2a-4acb-a466-e3e49f3ac7f8" class="">Examples: </h2><style>@import url('https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css')</style><pre id="57443aae-838f-4038-8939-4e7dcdc8ea0e" class="code"><code><span class="token function">mkdir</span> -p ~/.conf/systemd/user 
+podman rm -a 
+podman ps -a</code></pre><p id="e947d4a0-1eda-4cdb-a26f-347de735f51b" class="">Managing containers on RHEL 8 using podman - Advanced operations find and retrieve container images from a remote registry perform container management using commands such as podman and skopeo perform basic container management such as running , starting, stopping and listing running containers Run a service inside of a container Configure a container to start automatically as a systemd service Attach persistent storage to a container</p><p id="951c592a-dfe3-4584-8db2-c5a8b04265fd" class="">Commands: podman run -d -name Launch a new container to use as a model to generate the systemd unit files podman generate systemd Generate systemd unit file from your container. Must delete the container as systemd will create one new one podman stop|rm  Get rid of the container you created before you try to start your systemd container systemd commands: loginctl enable-linger loginctl disable-linger loginctl show-user  systemctl –user daemon-reload systemctl –user start|stop|enable UNIT Unit files: ~/.config/systemd/user/</p><h2 id="91d2b4cb-ac2a-4acb-a466-e3e49f3ac7f8" class="">Examples: </h2><pre id="57443aae-838f-4038-8939-4e7dcdc8ea0e" class="code"><code>mkdir -p ~/.conf/systemd/user 
 ll ~/.conf/systemd/user 
-<span class="token builtin class-name">cd</span> ~/.conf/systemd/user 
-<span class="token function">mkdir</span> ~/web_data 
-<span class="token builtin class-name">echo</span> “test data” <span class="token operator">></span> ~/web_data/test.txt 
-<span class="token function">cat</span> ~/web_data/test.txt podman run -d –name web_server -p <span class="token number">8000</span>:8000 -v ~/web_data:/var/www/html:Z registry.access.redhat.com/rhscl/httpd-24-rhel7 
-podman <span class="token function">ps</span> -a 
-<span class="token function">curl</span> http://127.0.0.1/test.txt 
-<span class="token builtin class-name">pwd</span> 
+cd ~/.conf/systemd/user 
+mkdir ~/web_data 
+echo “test data” &gt; ~/web_data/test.txt 
+cat ~/web_data/test.txt podman run -d –name web_server -p 8000:8000 -v ~/web_data:/var/www/html:Z registry.access.redhat.com/rhscl/httpd-24-rhel7 
+podman ps -a 
+curl http://127.0.0.1/test.txt 
+pwd 
 podman generate systemd –name web_server –files –new 
-<span class="token function">less</span> container-web_server.service 
-podman <span class="token function">ps</span> -a 
+less container-web_server.service 
+podman ps -a 
 podman stop web_server 
-podman <span class="token function">rm</span> web_server 
-podman <span class="token function">ps</span> -a 
+podman rm web_server 
+podman ps -a 
 loginctl enable-linger 
-loginctl show-user cloud_user <span class="token operator">|</span> <span class="token function">grep</span> linger 
+loginctl show-user cloud_user | grep linger 
 systemctl –user daemon-reload 
-systemctl –user <span class="token builtin class-name">enable</span> –now container-web_server.service 
+systemctl –user enable –now container-web_server.service 
 systemctl –user status container-web_server.service 
-podman <span class="token function">ps</span> -a 
-<span class="token function">curl</span> http://127.0.0.1/test.txt 
-<span class="token function">reboot</span> systemctl –user status container-web_server.service 
-<span class="token function">curl</span> http://127.0.0.1/test.txt</code></pre></div></article></body></html>
+podman ps -a 
+curl http://127.0.0.1/test.txt 
+reboot systemctl –user status container-web_server.service 
+curl http://127.0.0.1/test.txt</code></pre></div></article></body></html>
