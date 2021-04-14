@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>WMiObject</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>VM Checkpointing</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -624,4 +624,4 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="1aaafadb-2506-4518-ba53-6e8cb9711977" class="page sans"><header><h1 class="page-title">WMiObject</h1></header><div class="page-body"><figure id="a45743ab-77c2-492d-8419-10b2bb60d865" class="link-to-page"><a href="WMiObject%201aaafadb25064518ba536e8cb9711977/RAM%20System%20variables%20a45743ab77c2492d841910b2bb60d865.html">RAM System variables</a></figure><figure id="d8296a78-4f93-4d91-9717-3e9a1e072991" class="link-to-page"><a href="WMiObject%201aaafadb25064518ba536e8cb9711977/Allow%20remote%20WMI%20api%20calls%20d8296a784f934d9197173e9a1e072991.html">Allow remote WMI api calls</a></figure></div></article></body></html>
+</style></head><body><article id="d9e599fd-903e-4631-a61a-f01b416af1fc" class="page sans"><header><h1 class="page-title">VM Checkpointing</h1></header><div class="page-body"><p id="8b755aec-df44-4a9b-bdee-2dffa81863a1" class="">Create snapshot</p><pre id="8e8b7c13-6616-4cd4-be07-ba7cafcc38ca" class="code"><code>Checkpoint-VM -Name $Vm -SnapshotName BeforeInstallingUpdates</code></pre><p id="42d19f79-8b3b-473b-bf83-2c16acff97de" class="">Remove snapshot</p><pre id="c07a28d2-8e32-4f20-8ca5-adf5d74f4599" class="code"><code>Get-VM TestVM | Remove-VMSnapshot -Name BeforeInstallingUpdates</code></pre></div></article></body></html>

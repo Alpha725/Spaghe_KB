@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>WMiObject</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Start new window with commands</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -624,4 +624,4 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="1aaafadb-2506-4518-ba53-6e8cb9711977" class="page sans"><header><h1 class="page-title">WMiObject</h1></header><div class="page-body"><figure id="a45743ab-77c2-492d-8419-10b2bb60d865" class="link-to-page"><a href="WMiObject%201aaafadb25064518ba536e8cb9711977/RAM%20System%20variables%20a45743ab77c2492d841910b2bb60d865.html">RAM System variables</a></figure><figure id="d8296a78-4f93-4d91-9717-3e9a1e072991" class="link-to-page"><a href="WMiObject%201aaafadb25064518ba536e8cb9711977/Allow%20remote%20WMI%20api%20calls%20d8296a784f934d9197173e9a1e072991.html">Allow remote WMI api calls</a></figure></div></article></body></html>
+</style></head><body><article id="9cc56123-7044-44f0-a283-d722fbc4d03e" class="page sans"><header><h1 class="page-title">Start new window with commands</h1></header><div class="page-body"><p id="123fe5f0-a7a8-4505-8701-fb2547ab6d55" class="">So this is useful when you need to execute a process that take time to complete but you need to do it in a number of servers</p><pre id="c08a55c6-6c4a-44e7-a40e-b3b452434fdc" class="code"><code>invoke-expression &#x27;cmd /c start powershell -Command { write-host &quot;Hi, new window!&quot;; set-location &quot;C:\&quot;; get-childitem ; sleep 3}&#x27;</code></pre></div></article></body></html>
