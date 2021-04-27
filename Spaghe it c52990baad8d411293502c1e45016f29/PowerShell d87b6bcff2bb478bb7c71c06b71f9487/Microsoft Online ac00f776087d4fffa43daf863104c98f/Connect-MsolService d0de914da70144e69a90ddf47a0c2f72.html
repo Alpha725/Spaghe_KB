@@ -624,10 +624,12 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="d0de914d-a701-44e6-9a90-ddf47a0c2f72" class="page sans"><header><h1 class="page-title">Connect-MsolService</h1></header><div class="page-body"><pre id="5fdc43fd-3f00-4e19-91ec-9d152719091c" class="code"><code>$AdminUsername = Read-Host -Prompt &quot;Azure/Office 365 Admin User Account&quot;
+</style></head><body><article id="d0de914d-a701-44e6-9a90-ddf47a0c2f72" class="page sans"><header><h1 class="page-title">Connect-MsolService</h1></header><div class="page-body"><p id="2dc3ba1a-8333-4594-a2e5-018057abe000" class="">if you are manually entering this do it a line at a time</p><pre id="5fdc43fd-3f00-4e19-91ec-9d152719091c" class="code"><code>## Get Creds
+$AdminUsername = Read-Host -Prompt &quot;Azure/Office 365 Admin User Account&quot;
 $AdminPassword = Read-Host -Prompt &quot;Password&quot; -AsSecureString
 $adminCredentials = New-Object -TypeName System.Management.Automation.PSCredential -argumentlist $AdminUsername, $AdminPassword
-Login-AzureRmAccount -Credential $adminCredentials
-Install-Module MSOnline
-Connect-MsolService
-Get-MsolPartnerContract -All | Select-Object DefaultDomainName,TenantId |format-table</code></pre></div></article></body></html>
+## Connect to the MSOL to manage the other tennants
+Connect-MsolService -Credential $adminCredentials
+## Starter command to allow you to see your tennants:
+Get-MsolPartnerContract -All | Select-Object DefaultDomainName,TenantId |format-table</code></pre><p id="9244e965-f751-46db-9017-d4863e58047b" class="">
+</p></div></article></body></html>

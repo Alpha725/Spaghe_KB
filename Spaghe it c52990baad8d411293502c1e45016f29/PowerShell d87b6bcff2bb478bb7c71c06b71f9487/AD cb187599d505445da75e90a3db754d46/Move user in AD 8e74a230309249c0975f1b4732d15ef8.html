@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Microsoft Online </title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Move user in AD</title><style>
 /* webkit printing magic: print all background colors */
 html {
 	-webkit-print-color-adjust: exact;
@@ -624,4 +624,9 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="ac00f776-087d-4fff-a43d-af863104c98f" class="page sans"><header><h1 class="page-title">Microsoft Online </h1></header><div class="page-body"><figure id="d0de914d-a701-44e6-9a90-ddf47a0c2f72" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Connect-MsolService%20d0de914da70144e69a90ddf47a0c2f72.html">Connect-MsolService</a></figure><figure id="66a15b84-3a15-468d-8475-0608a75c942c" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Get-MsolUser%2066a15b843a15468d84750608a75c942c.html">Get-MsolUser</a></figure><figure id="7d2a39db-254b-4052-b6af-c96592a9e9e6" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Remove%20Licenses%207d2a39db254b4052b6afc96592a9e9e6.html">Remove Licenses</a></figure><figure id="c028c6d3-2528-4c88-b114-a7a0ac572ec9" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Set%20auto%20reply%20Exchange%20Online%20c028c6d325284c88b114a7a0ac572ec9.html">Set auto reply Exchange Online</a></figure><figure id="8acdeb53-57ee-4a46-85bf-017ec1cc0627" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Convert%20mailbox%20to%20shared%208acdeb5357ee4a4685bf017ec1cc0627.html">Convert mailbox to shared</a></figure><figure id="9721e963-ce6e-4b5a-8413-f6cc99166d63" class="link-to-page"><a href="Microsoft%20Online%20ac00f776087d4fffa43daf863104c98f/Block%20365%20sign%20in%209721e963ce6e4b5a8413f6cc99166d63.html">Block 365 sign in</a></figure></div></article></body></html>
+</style></head><body><article id="8e74a230-3092-49c0-975f-1b4732d15ef8" class="page sans"><header><h1 class="page-title">Move user in AD</h1></header><div class="page-body"><p id="d6167d1b-6070-40c9-8d10-fea639c37d6e" class="">So the applications for this are more to move a bunch of users to another place but also it is a way into powershell top </p><pre id="0daabb5a-7472-47c1-b47d-0834609f6440" class="code"><code>$user = get-aduser -Identity &#x27;example&#x27;
+$orgunit = Get-ADOrganizationalUnit -Filter * |? {$_.name -like &#x27;*OU_name*&#x27;}
+$OU = $orgunit.DistinguishedName
+$OUU = $user.DistinguishedName
+Move-ADObject -Identity $OUU -TargetPath $OU</code></pre><p id="f2a5f814-ec86-4eb4-a695-c2a90a0f3e33" class="">
+</p></div></article></body></html>
