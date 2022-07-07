@@ -1,0 +1,671 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Linux</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0b17eea5-add3-4887-8111-f06eb65275bd" class="page sans"><header><h1 class="page-title">Linux</h1></header><div class="page-body"><figure id="afd5db5f-6062-46b6-bc41-104a5dc74bd6" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Linux%20-%20Full%20but%20not%20full%20filesytems%20afd5db5f606246b6bc41104a5dc74bd6.html">Linux - Full but not full filesytems</a></figure><figure id="446273d4-104f-4599-9827-7f8a755eede3" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Linux%20-%20test%20446273d4104f459998277f8a755eede3.html">Linux - test</a></figure><figure id="76ce108d-988e-4d0d-a354-3084d8b2307c" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Netplan%20example%2076ce108d988e4d0da3543084d8b2307c.html">Netplan example</a></figure><figure id="6972bda0-164f-4ce0-98f2-611df1c51e9f" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Ceph%20-%20notes%206972bda0164f4ce098f2611df1c51e9f.html">Ceph - notes</a></figure><figure id="7ae81df7-e243-489b-b17d-41add7e5d0c0" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Chia%20-%20Move%20plots%207ae81df7e243489bb17d41add7e5d0c0.html">Chia - Move plots</a></figure><figure id="053e2909-f0aa-46ba-9edc-f37ae67b47df" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Chia%20-%20filesystem%20setup%20053e2909f0aa46ba9edcf37ae67b47df.html">Chia - filesystem setup</a></figure><figure id="f85abe50-db11-416b-a30c-45330c53b712" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/WhipTail%20-%20Menu-ing%20in%20scripting%20f85abe50db11416ba30c45330c53b712.html">WhipTail - Menu-ing in scripting</a></figure><figure id="4d3f8fac-4834-489e-a0b5-02b9584637fe" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Case%20-%20example%204d3f8fac4834489ea0b502b9584637fe.html">Case - example</a></figure><figure id="8651343c-5ca3-4109-9bfd-fa71c4ab5cd4" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Deploy%20-%20Project%208651343c5ca341099bfdfa71c4ab5cd4.html">Deploy - Project</a></figure><figure id="571bd93a-5848-422f-b203-eaeafcb975b3" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Ceph%20-%20Example%20cloud%20deployment%20571bd93a5848422fb203eaeafcb975b3.html">Ceph - Example cloud deployment</a></figure><figure id="8dcf02ab-ec75-4537-ade0-cb215b142a20" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Shuffle%20io%208dcf02abec754537ade0cb215b142a20.html">Shuffle.io</a></figure><figure id="6cba70af-4743-4d6d-8d79-252a58f69d5e" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/grep%20recursively%206cba70af47434d6d8d79252a58f69d5e.html">grep recursively</a></figure><figure id="fceac8e8-cee9-4f28-8d88-5e974185df71" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/SSH%20Tunneling%20fceac8e8cee94f288d885e974185df71.html">SSH Tunneling</a></figure><figure id="8dfcf940-fda4-4abf-b4a8-9072a78bc7d3" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Terminate%20SSH%20sessions%208dfcf940fda44abfb4a89072a78bc7d3.html">Terminate SSH sessions</a></figure><figure id="cee0f814-97b5-490f-bb87-3ccaef9810e1" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Printers%20cee0f81497b5490fbb873ccaef9810e1.html">Printers</a></figure><div id="22326b41-9ecb-44a5-8589-7e224f1155b3" class="column-list"><div id="7fd2ab08-cd48-417f-b88a-01cd5c1ba4c4" style="width:50%" class="column"><figure id="da707f14-5609-4b2c-a95a-faf9077bec40" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Print%20just%20a%20column%20da707f1456094b2ca95afaf9077bec40.html">Print just a column</a></figure></div><div id="9b3f6749-382f-49dd-a699-0e2d8fe1bf1a" style="width:50%" class="column"><figure id="fdba3e0c-a1bf-4a63-9eea-781f0bf391a1" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Dictionaries%20in%20Bash!%20fdba3e0ca1bf4a639eea781f0bf391a1.html">Dictionaries in Bash!</a></figure></div></div><figure id="0d2856dc-31a7-492b-970f-be80b1d441ba" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Test%20port%20connectivity%200d2856dc31a7492b970fbe80b1d441ba.html">Test port connectivity </a></figure><figure id="15385634-e7df-459e-aa7b-b342cb65fcf0" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Fix%20CRLF%2015385634e7df459eaa7bb342cb65fcf0.html">Fix CRLF</a></figure><figure id="6d51c00c-744c-40a6-a3c9-62c0cfaf3757" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Restarting%20Gnome%206d51c00c744c40a6a3c962c0cfaf3757.html">Restarting Gnome</a></figure><figure id="35b8d003-4119-48dc-9f13-5152bead3d5d" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Storage%20-%20Scan%20for%20changes%2035b8d003411948dc9f135152bead3d5d.html">Storage - Scan for changes</a></figure><figure id="cc06ac2a-ebfe-4db4-b42c-1fbdcc349c09" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Storage%20-%20drive%20cloning%20cc06ac2aebfe4db4b42c1fbdcc349c09.html">Storage - drive cloning</a></figure><figure id="9f46ed5c-1da0-489f-8009-deb850acb773" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Install%20-%20repackage%20installer%20files%209f46ed5c1da0489f8009deb850acb773.html">Install - repackage installer files</a></figure><figure id="cad2ab53-b5b9-45ed-96e6-5ce591abfdb7" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Find%20and%20execute%20cad2ab53b5b945ed96e65ce591abfdb7.html">Find and execute</a></figure><figure id="7b5be557-f021-4087-808e-ef40e1e4c2b7" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Grep%20-%20unique%207b5be557f0214087808eef40e1e4c2b7.html">Grep - unique</a></figure><figure id="10686fdf-94a2-4f0e-bff2-73888fd9134f" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/du%20-%20Get%20folder%20size%2010686fdf94a24f0ebff273888fd9134f.html">du - Get folder size</a></figure><figure id="dc9ac857-00c5-4d2b-bb27-ae2d45490321" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/grep%20-%20Recursive%20search%20dc9ac85700c54d2bbb27ae2d45490321.html">grep - Recursive search</a></figure><figure id="b13e934e-4835-4ca7-a4da-4aac3901f5f8" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Grep%20-%20between%202%20values%20b13e934e48354ca7a4da4aac3901f5f8.html">Grep - between 2 values</a></figure><figure id="3e94d710-6bba-42ac-9ca2-cf59119755ef" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Linux%20-%20soft%20symbolic%20links%20-%20ln%203e94d7106bba42ac9ca2cf59119755ef.html">Linux - soft symbolic links - ln</a></figure><figure id="c7361b65-6441-4a60-a335-fd373003d18a" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/SSH%20-%20Generate%20a%20key%20to%20a%20local%20file%20c7361b6564414a60a335fd373003d18a.html">SSH - Generate a key to a local file</a></figure><p id="0225134c-5be7-42d7-9db9-60c8fcc147a6" class="">
+</p><figure id="08509a9f-59be-472a-a872-16a25b1b89cf" class="link-to-page"><a href="Linux%200b17eea5add348878111f06eb65275bd/Linux%20-%20Environments%20-%20add%20new%20$PATH%20globally%2008509a9f59be472aa87216a25b1b89cf.html">Linux - Environments - add new $PATH globally</a></figure><p id="b331b1c2-4a85-4a7b-a9ea-c0ca196e0c9d" class="">
+</p></div></article></body></html>
