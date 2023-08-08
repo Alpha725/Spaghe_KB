@@ -1,0 +1,242 @@
+Impact of file systems
+	- EXT4
+	- ReFs
+	- these will use pointers on the block storage
+	- How do you know if it is being used
+	- using a sythetic full backups, it will not load up the disk
+	- Impact on destination storage	
+		- Active full is just a single write
+			- does not benifit from the fast clone
+		- Forever forward incremental 
+			- does not benfit 
+	- Proxy transport modes
+		- direct attached proxies
+			- local expert is saying that 2TB and large VMs can be an issue 
+			- we have the proxy that has firect storage connection (Usually Fibre)
+			- it comunicates directly with the storage
+		- virtual applicance mode
+			- we leverage snapshots
+			- it uses the host for access to the storage
+		- network mode
+			- can bite?
+			- it is seen as a basic level will work
+			- 1GB connections are terrible, you need to have a 10GB connection
+			- Management interface uses 60% of its bandwidth
+			- You can add additional management ports within the software
+		- direct storage access (VMware)
+			- Direct SAN access 
+				- VM is running on a snapshot for a limited time 30 seconds
+				- Can directly grab the blocks without network impact on the prod envoment
+		- backup from storage snapshot
+			- create the VM snapshot
+			- create a storage snapshot
+			- delete the VM snapshot
+			- storage snapshot goes not grow
+			- deleting a storage snapshots
+		- Storage integration
+			- standard VM backups
+			- we need to consider the amount of change in a VM in the backup window 
+			- there are issues with VM stun with with high change
+			- with Veeam storage integration you have two peaks at the begining.
+			- one for creating the VM snapshot
+			- one for the storage snapshot
+			- one for deleting the VM snapshot
+			- then the backup and transfer 
+			- storage snapshots need to have drivers installed to have this work
+			- this would be on the storage side
+			- this may cost licensing for these featrues 
+			- Licensing
+				- Dell SAN 
+					- you have to pay for the proformance 
+				- VMware 
+					- they had a mermory tax
+				- Veeam 
+					- have change the licensing mode
+					- they do it per CPU 
+					- popetual license is going away
+					- the universal license make it an easy option 
+				- Veeam community edition
+					- good mum and dad product
+					- limitations
+					- They will not support the community edition
+					- Can not be used in any type of prod enviroment
+			- legacy implementation	
+				- they would snapshot 
+				- change it to a lun
+				- it will write a signature to the lun 
+				- then it loses the CBT
+				- Veeam 
+					- they dont touch the lun 
+					- no signature 
+					- keeps CBT
+			- Virtual applicane 
+				0 not supported NFS storge
+			- local storage	
+				- not supported with direct storage access
+			- make sure to have a VM proxy
+				- you can have a linux based machine 
+			- applicane proxy can cause issues with jobs
+				- virtual prxy can be left to hold 10 or so virtual disks
+				- you can try to consolidate but it will not work
+				- gets to be an issue with many proxies
+Per-VM backup chains
+	- backup jobs write VM data to repository in one write stream
+	- store data on all VMs to same backup files
+	- basically you have options to store one very large file or multiple files 
+	- scale out backup repository
+		- it scales out
+		- proformance tier
+		- capacity tier
+	- Retention - copy w/ immutability 
+		- they set a fix ten days in addition to any you have configured
+	- Scaple-out backup repository: mainance mode 
+		- used for removing and replacing
+	- seal an SOBR extent
+		- it is an option that will stop writes but allow reads
+		- used for stopping new jobs
+	- you can place it into both modes at the same time	
+		- you can only pull data off of it
+	- You can always pull out of these modes	
+		- you can use this for storage array 
+Deduplication appliances
+	- Support for deduplicating storage systems
+		- you need to have a gateway server to allow you to 
+	- Dell EMC data Domain intergation
+		- DD boost tech offers a set of features
+	- HPE StoreOnce catalyst integration 
+		- needed otherwise store once has to process all of the
+			- chunk 
+			- hash 
+			- match 
+			- compress
+			- store
+	- Data Domain (DD) seems to work better
+	- There is a 120 limit on the storage box
+		- HPE is imature which is causing issues
+	- ExaGrid storage with data deduplication 
+		- uses a platform with no deduplication (landing zone)
+		- it is later deduped after 72 hours
+		- no gateway server needed, we can use the datamover service on the server
+	- Deduplication is recommeneded that you dont use a primary but a secondary
+		- landing zone is defined by the users with size 
+		- doesnt do it funcky shit on the disk
+Testing backup and replication
+	- application group 
+		- will be the DC and SQL 
+		- is a group of machines to support the opertation
+	- virtual lab 
+		- Linux Helper VM that you define
+		- Mascerading works through nat
+		- see diagram https://docs.google.com/drawings/d/16dxMYwEWk7jCDkELchhog30CCN9o_F-g3iqInTblZd4/edit?usp=sharing
+		- You can leave the virtual lab running
+		- Users can also be run in a sandbox
+	- surbackup 
+		- you define the virtual lab and network
+		- You can reduce the VM resources with in the virtual lab 
+		- you can also create a report 
+			- it can be used for backup file validation
+		- replicas are different
+			- they are one to one copy of the servers
+			- in this case are just attach an extra protective snapshot to keep writes from it
+			- What if we are running the have a test with a lab, and replication runs it will shutdown the machine and replication
+	- sandbox
+		- is an isolated set of servers
+	- staged restore
+		- it is a reversing tool
+		- go back to a backup and make changes in a backup
+		- 
+SureBackup
+	- very cool thing, you can run just the parts of the servers you want to create test enviroment
+	- You can shift
+	
+Veeam backup enterprise manager
+	- Deploy examples
+	- Centralized management
+		- give you a federated veiw of all of the instances
+		- centalized: 
+			- Statistics
+			- reports 
+			- Licensing management
+		- also can be used to decrypt encrypted backups
+	- Delegation of rights
+	- vSphere client plug-in
+	- High level of restore down to the file in the file system 
+	- Roles we can get them access to the base level
+	- Veeam ZIP allows you to take a backup of a VM on the fly
+		- multi platform, adhoc 
+	- quick backup is incremental backup 
+		- it will associate itself with the next secheduled incremental and will be purged at the same time
+Veeam One
+	- it can monitor
+	- you can use it as an optimisation tool before deploying to it
+	- You can use it as a predeployment testing tool
+	- Gives you different views business
+	- Tags are used to filter machines
+	- allows you to report off of
+	- vCoud
+	- vSphere 
+	- Hyper-V
+	- what can we monitor
+		- VMs
+		- Backups
+			- agent
+			- file
+			- stats include
+				- last run
+				- Duration
+				- Avh, duration
+		- Proy monitor
+		- Backup windows
+		- CPU usage
+		- proxy useage
+		- file proxy
+			- tasks
+			- jobs
+		- backup repostories
+			- free space
+			- used space
+		- WAN acclorators
+		- Tape jobs
+Intelegent diagnositics
+	- We can pull down signatures
+	- it uses this to alert for malicous activity
+	- you can allow Veeam to self remediate to resolve issues
+	- You can export the signatures
+Veeam One - Alarms
+	- everything
+	- there are 240 preconfig alarm configs
+	- turn off the defaults
+	- we can email out or execute scripts onto the machine with the error
+	- views
+		- Business view
+			- it can be organised into folders to keep tract of when is being used departmentally
+			- create the catagry which is used as the view
+			- then folders are for the departments
+			- we can cluster off of a number of different things
+			- Large number of options to be able to cluster off of
+			- you can export the tags to the vsphere enviroment
+			- they can also dump them out of the enviroment
+			- 10 tags per VM
+			- by default tags are not imported from vSphere
+Veeam One reporter
+	- Add dashboard
+	- report here, yes more reports
+	- copy paste everything from the above
+Configuration backups
+	- backups the application
+	- can be used to restore an enviroment
+	- 
+VMWare 
+	- tags is super useful
+
+
+Exam: 
+	- Protection of the device will always win
+	- Exam be familiar with the top level generating report
+	
+	Rhyshammond.com (Do this)
+	perfectcloud.org/catagory/veeam (Do this)
+	https://go.veeam.com/v10
+	VeeamIQ 
+	leanrhub
+	https://go.veeam.com/vmce-2020-exam-preparation

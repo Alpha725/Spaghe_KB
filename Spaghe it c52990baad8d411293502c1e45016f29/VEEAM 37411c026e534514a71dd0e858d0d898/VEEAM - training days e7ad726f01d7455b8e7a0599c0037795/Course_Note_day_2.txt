@@ -1,0 +1,449 @@
+Lab 4 
+	- Restoring from backup
+	
+Object recovery
+	- Application item recovery
+		- There are Veeam Explorer applciation avaliable for 
+			- Exchange
+				- Mount it, restore from it.
+				- Recovery of mailbox items
+				- lets you browse Mailboxes stores
+				- before you can start working with veeam explorer you need to extract a MEB from the storage snapshot
+				- You can restore Guest OS files from a backup of a virtualized Microsoft Exchange server and manually locate a microsoft exchange database
+				- Recovery of mailbox items
+					- Compare to the production server 
+					- Recover from hard deleted items (that were noth created and deleted since last backup)
+					- Recover from litigatioon and in-place hold items (litigation holds the entire thing, in-place hold is filterable and confirguable)
+					- Support for browsing and restoring items in the versions subfolder of the recoverable items mailbox folder
+				- Lots of reporitng from the Veeam side
+			- SharePoint
+				- intergates with Veeam explorer
+				- lets you browse the content databases in VMs located on storage snapshots 
+				- You can restore a library, down to individual items
+				- Can use local or remote staging server. 
+			- Active Directory
+				- it is an instant vm recovery 
+				- we can restore indivdual users
+				- use it to audit user group memberships and also atributes
+				- Can restore DNSm GPO, Configuration partition objects, Microsoft system object, CA Cir
+				- will restore old passwords
+			- SQL 
+				- Local or remote staging server
+				- we can restore to 
+				- we can restore to backup file (.bak)
+				- we can restore schema 
+				- we can restore tables
+				- enterprise manager will allow you to give the user access to restore
+				- need to make sure it is the same or higher version of SQL
+				- log files are important
+			- Orcale
+				- We can restore to live 
+				- We can retore to backup file
+				- very simular to SQL
+				- all of the same options
+				- log files are important
+		- Each explorer share the abiltity to: 
+			- View
+			- Browse 
+			- Search
+			- Restore 
+			- Export items
+	- Guest file recovery 
+		- File level restore 
+			- is restored from a mount point off of a machine to allow you to restore the file
+			- It can be overriten or renamed to a side by side
+			- Linux uses a tiny VM to get you a mount piont, and allows you to do the same thing
+			- (comeback to!!!!!!!!!!)
+		- we use instant VM recovery to allow you to restore files from odd file system
+		- Mount server will be the closest server. it will then hand off to the mount server for most efficent deployement
+		- Linux is different with the helper VM to bridge
+	- NAS recovery 
+		- Restore an entire file share
+		- Roll back to a point in time
+		- Restore specific files and folders
+Second site backup
+	- Application item recovery 
+	- Guest file recovery
+	- NAS recovery
+	- Example deployment 
+		- Simple deployment looks like
+			- Hosts with no access from the Veeam server
+			- Access to the VMs 
+		- Advanced deployment
+			- you have an additional proxy server and Veeam backup repository
+			- more consoles on other devices
+	- WAN accelerator
+		- Global data caching
+		- Data deduplication
+		- High bandwidth mode
+		- they need to be deployed in pairs
+			source and desitination
+		- They will have finger prints on the diget files
+		- on the destination it will cache application block (only exchange atm)
+		- We need to enable the option to have WAN accelleration
+		- first job will send all
+		- the destination 
+		- Cache 10GBs for windows and 2 for linux OSs (10GBs for OS Check)
+		- it will cache OS files and it will then transfer all other changes on top of this.
+		- we have the option on the target side to prepopulate the OS Cache
+		- this will reduce the amount of files being transfered
+		- Veeam dedup is not the best in the world
+		- One to many
+			- it will create a 'folder' per source
+			- 2 source to one server creates two folders 
+			- Global Cache
+				- Accelerator 1
+				- Accelerator 2
+		- Should be a WAN Optimisor
+	- Tape servers
+		- Veeam wants us to use windows drivers
+		- Gateway server is installed when a data mover can not be moved
+		- Think of this as a bridge
+			- you can have the server talk to the device and veeam can talk to the server.
+		- Data mover is automatically installed
+		- Gateway server is a deployed server, this can an existing proxy
+Backup copies
+	- Describe the concepts behind backup copy jobs
+	- Create, Modify and delete a backup copy job
+	- Used when we have 3-2-1
+	- Backup copies
+	- how does it work
+		- network transport
+		- You can migrate jobs for moving from prod to slower storage
+	- Gateway servers can be used here too 
+	- WAN accelerator can also do thing with more optemisations
+	- example:
+		- Primary backup storage 
+		- Job to copy to another onsite
+		- Job to copy to offsite 
+	- backup copy job modes
+		- immidate copy mode
+			- it happens, it copys. 
+			- It have to be a scheduled job
+			- Logs need to be transfered for this
+			- Log shipping service
+		- Backup copy job periodic copy mode
+			- happens on a schedule 
+			- there are a list of rules for what gets kept 
+	- GFS full Synthetic 
+		- On wednesday we take a full back up
+		- SO you if you set the retention to be 2 backups on a friday and you have a forward forever
+			- this means that it will roll forward the backup on the friday and also will keep it as long as the policy is met
+		- retention points are the incremental backups and the GFS options allow you to have a full forever forward backup that is a merger of all of the incrementals
+	- Shore backup and shore replica are very good, must be some kind of management 
+Backup to tape
+	- backup to tape options
+	- You need to have an extra tape reader
+	- You add a role to a server for a tape server
+	- data mover server will move from the backup server to the tape server 
+	- tapes are then taken to Iron Mountain
+	- Has to be window drives for tape machines
+	- Backup to tape will creaye a backup set
+	- media pool is created when free 
+	(Please review this as I dont understand this well enough)
+	- supports parrellel tape processing
+	- Problems with 
+Building replication capabilities
+	- Replication
+	- Replica seeding
+	- Replica mapping 
+	- Remote replica from backup
+	- Netwroking remapping
+	- Re-IP
+	- 1:1 copy of a VM in native hypervious default format
+		- thus
+			- No deduplication
+			- No compression
+			- No encryption
+	- VMware 
+		- onsite replication 
+		- two different hosts with the same VMs
+		- this would be an onsite solution
+		- an offsite replication is done over WAN
+		- The idea is direct replication between hosts
+		- VMWare snapshots 28 restore points
+	- Hyper-V 
+		- the server are the proxy servers
+		- host to host
+		- has a limit of 47 checkpoints restore points
+	- They use leverage Snapshots to complete the replication
+	- You can use backups to snapshots
+	- take a snapshot, then uses CBT to minimise the amount of changes
+	- You can do this over WAN, 
+	- inital replica is a full copy
+	- You can map a VM on prod to the replica server to point at a particular VM
+	- You can do remote replica from backup 
+		- this is a replica from backup
+	- WAN accelerators for replicas
+		- we are looking at the data blocks to then find the most efficent way
+		- has continue on disconnect means it will be able to continue to work even if the connection is broken
+	- Reducing the amount of data being transfered
+		- remote replica from backup
+		- seeding 
+		- mapping 
+		- WAN accelerator
+	- Network remapping
+		- You can specify the map
+	- Re-IP (Windows only feature)
+		- Mounts VM disk of replica to the backup server
+		- Changes IP address configuration via Microsoft Windows registry
+		- Whole operation takes less than a second
+		- this can only be done via script
+Recovery from Replica
+	- Replica failover
+	- Undo fail over
+	- Permement failover
+	- failback to production
+	- undo failback
+	- commit failback
+	- failback plan 
+	- Planned failover
+	- We get near CDP with WAN accelerator
+	- Replication back to the orgianal host from replica need to be manually initiated
+	- Revisit this 
+	
+Important for exam: 
+	- Make sure to read the whats new for version 10 from 9.5
+	- can be restored from LDAP 
+	- make sure to note all of the right click options for backing up objects
+	- Make sure that you have dedup installed on the mount point server!!!
+	- Exams are very practical 
+	- Make sure that you are exactly one click deeper so be able to know what all the other options do on 
+	- 3-2-1 rule make sure to consider weather it is forfilling this
+	- Has to be window drives for tape machines
+	- Replication
+		- Hyper-V 
+			- the server are the proxy servers
+			- host to host
+			- has a limit of 47 checkpoints restore points
+		- VMware 
+			- onsite replication 
+			- two different hosts with the same VMs
+			- this would be an onsite solution
+			- an offsite replication is done over WAN
+			- The idea is direct replication between hosts
+			- VMWare snapshots 28 restore pointsLab 4 
+	- Restoring from backup
+	
+Object recovery
+	- Application item recovery
+		- There are Veeam Explorer applciation avaliable for 
+			- Exchange
+				- Mount it, restore from it.
+				- Recovery of mailbox items
+				- lets you browse Mailboxes stores
+				- before you can start working with veeam explorer you need to extract a MEB from the storage snapshot
+				- You can restore Guest OS files from a backup of a virtualized Microsoft Exchange server and manually locate a microsoft exchange database
+				- Recovery of mailbox items
+					- Compare to the production server 
+					- Recover from hard deleted items (that were noth created and deleted since last backup)
+					- Recover from litigatioon and in-place hold items (litigation holds the entire thing, in-place hold is filterable and confirguable)
+					- Support for browsing and restoring items in the versions subfolder of the recoverable items mailbox folder
+				- Lots of reporitng from the Veeam side
+			- SharePoint
+				- intergates with Veeam explorer
+				- lets you browse the content databases in VMs located on storage snapshots 
+				- You can restore a library, down to individual items
+				- Can use local or remote staging server. 
+			- Active Directory
+				- it is an instant vm recovery 
+				- we can restore indivdual users
+				- use it to audit user group memberships and also atributes
+				- Can restore DNSm GPO, Configuration partition objects, Microsoft system object, CA Cir
+				- will restore old passwords
+			- SQL 
+				- Local or remote staging server
+				- we can restore to 
+				- we can restore to backup file (.bak)
+				- we can restore schema 
+				- we can restore tables
+				- enterprise manager will allow you to give the user access to restore
+				- need to make sure it is the same or higher version of SQL
+				- log files are important
+			- Orcale
+				- We can restore to live 
+				- We can retore to backup file
+				- very simular to SQL
+				- all of the same options
+				- log files are important
+		- Each explorer share the abiltity to: 
+			- View
+			- Browse 
+			- Search
+			- Restore 
+			- Export items
+	- Guest file recovery 
+		- File level restore 
+			- is restored from a mount point off of a machine to allow you to restore the file
+			- It can be overriten or renamed to a side by side
+			- Linux uses a tiny VM to get you a mount piont, and allows you to do the same thing
+			- (comeback to!!!!!!!!!!)
+		- we use instant VM recovery to allow you to restore files from odd file system
+		- Mount server will be the closest server. it will then hand off to the mount server for most efficent deployement
+		- Linux is different with the helper VM to bridge
+	- NAS recovery 
+		- Restore an entire file share
+		- Roll back to a point in time
+		- Restore specific files and folders
+Second site backup
+	- Application item recovery 
+	- Guest file recovery
+	- NAS recovery
+	- Example deployment 
+		- Simple deployment looks like
+			- Hosts with no access from the Veeam server
+			- Access to the VMs 
+		- Advanced deployment
+			- you have an additional proxy server and Veeam backup repository
+			- more consoles on other devices
+	- WAN accelerator
+		- Global data caching
+		- Data deduplication
+		- High bandwidth mode
+		- they need to be deployed in pairs
+			source and desitination
+		- They will have finger prints on the diget files
+		- on the destination it will cache application block (only exchange atm)
+		- We need to enable the option to have WAN accelleration
+		- first job will send all
+		- the destination 
+		- Cache 10GBs for windows and 2 for linux OSs (10GBs for OS Check)
+		- it will cache OS files and it will then transfer all other changes on top of this.
+		- we have the option on the target side to prepopulate the OS Cache
+		- this will reduce the amount of files being transfered
+		- Veeam dedup is not the best in the world
+		- One to many
+			- it will create a 'folder' per source
+			- 2 source to one server creates two folders 
+			- Global Cache
+				- Accelerator 1
+				- Accelerator 2
+		- Should be a WAN Optimisor
+	- Tape servers
+		- Veeam wants us to use windows drivers
+		- Gateway server is installed when a data mover can not be moved
+		- Think of this as a bridge
+			- you can have the server talk to the device and veeam can talk to the server.
+		- Data mover is automatically installed
+		- Gateway server is a deployed server, this can an existing proxy
+Backup copies
+	- Describe the concepts behind backup copy jobs
+	- Create, Modify and delete a backup copy job
+	- Used when we have 3-2-1
+	- Backup copies
+	- how does it work
+		- network transport
+		- You can migrate jobs for moving from prod to slower storage
+	- Gateway servers can be used here too 
+	- WAN accelerator can also do thing with more optemisations
+	- example:
+		- Primary backup storage 
+		- Job to copy to another onsite
+		- Job to copy to offsite 
+	- backup copy job modes
+		- immidate copy mode
+			- it happens, it copys. 
+			- It have to be a scheduled job
+			- Logs need to be transfered for this
+			- Log shipping service
+		- Backup copy job periodic copy mode
+			- happens on a schedule 
+			- there are a list of rules for what gets kept 
+	- GFS full Synthetic 
+		- On wednesday we take a full back up
+		- SO you if you set the retention to be 2 backups on a friday and you have a forward forever
+			- this means that it will roll forward the backup on the friday and also will keep it as long as the policy is met
+		- retention points are the incremental backups and the GFS options allow you to have a full forever forward backup that is a merger of all of the incrementals
+	- Shore backup and shore replica are very good, must be some kind of management 
+Backup to tape
+	- backup to tape options
+	- You need to have an extra tape reader
+	- You add a role to a server for a tape server
+	- data mover server will move from the backup server to the tape server 
+	- tapes are then taken to Iron Mountain
+	- Has to be window drives for tape machines
+	- Backup to tape will creaye a backup set
+	- media pool is created when free 
+	(Please review this as I dont understand this well enough)
+	- supports parrellel tape processing
+	- Problems with 
+Building replication capabilities
+	- Replication
+	- Replica seeding
+	- Replica mapping 
+	- Remote replica from backup
+	- Netwroking remapping
+	- Re-IP
+	- 1:1 copy of a VM in native hypervious default format
+		- thus
+			- No deduplication
+			- No compression
+			- No encryption
+	- VMware 
+		- onsite replication 
+		- two different hosts with the same VMs
+		- this would be an onsite solution
+		- an offsite replication is done over WAN
+		- The idea is direct replication between hosts
+		- VMWare snapshots 28 restore points
+	- Hyper-V 
+		- the server are the proxy servers
+		- host to host
+		- has a limit of 47 checkpoints restore points
+	- They use leverage Snapshots to complete the replication
+	- You can use backups to snapshots
+	- take a snapshot, then uses CBT to minimise the amount of changes
+	- You can do this over WAN, 
+	- inital replica is a full copy
+	- You can map a VM on prod to the replica server to point at a particular VM
+	- You can do remote replica from backup 
+		- this is a replica from backup
+	- WAN accelerators for replicas
+		- we are looking at the data blocks to then find the most efficent way
+		- has continue on disconnect means it will be able to continue to work even if the connection is broken
+	- Reducing the amount of data being transfered
+		- remote replica from backup
+		- seeding 
+		- mapping 
+		- WAN accelerator
+	- Network remapping
+		- You can specify the map
+	- Re-IP (Windows only feature)
+		- Mounts VM disk of replica to the backup server
+		- Changes IP address configuration via Microsoft Windows registry
+		- Whole operation takes less than a second
+		- this can only be done via script
+Recovery from Replica
+	- Replica failover
+	- Undo fail over
+	- Permement failover
+	- failback to production
+	- undo failback
+	- commit failback
+	- failback plan 
+	- Planned failover
+	- We get near CDP with WAN accelerator
+	- Replication back to the orgianal host from replica need to be manually initiated
+	- Revisit this 
+	
+Important for exam: 
+	- Make sure to read the whats new for version 10 from 9.5
+	- can be restored from LDAP 
+	- make sure to note all of the right click options for backing up objects
+	- Make sure that you have dedup installed on the mount point server!!!
+	- Exams are very practical 
+	- Make sure that you are exactly one click deeper so be able to know what all the other options do on 
+	- 3-2-1 rule make sure to consider weather it is forfilling this
+	- Has to be window drives for tape machines
+	- Replication
+		- Hyper-V 
+			- the server are the proxy servers
+			- host to host
+			- has a limit of 47 checkpoints restore points
+		- VMware 
+			- onsite replication 
+			- two different hosts with the same VMs
+			- this would be an onsite solution
+			- an offsite replication is done over WAN
+			- The idea is direct replication between hosts
+			- VMWare snapshots 28 restore points

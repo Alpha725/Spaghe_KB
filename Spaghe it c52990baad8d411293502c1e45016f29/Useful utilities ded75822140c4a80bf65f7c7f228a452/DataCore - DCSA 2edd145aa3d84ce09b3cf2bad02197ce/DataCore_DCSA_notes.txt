@@ -1,0 +1,275 @@
+in this Course
+We will provide different tools for you to complete
+
+========Responsabilities that they outline:========
+	- Pre installation test list
+	- They have documents 
+
+========Inside sales team: ========
+	- They provide leads for work to us
+	- We need to understand the systems
+	- course will allow us to 
+
+========Technical presentation. ========
+	- There is all of the information with in the powerpoint
+	- We will be working within the team to get more information
+	- I will review the powerpoint at the end to get me additional details to allow me to move to the next qualiforcation so I can learn
+
+========Using NFRs========
+	- We have not for Resales licenses. 
+	- these are for non production enviroments
+	- We can run it with VMWare, nucs, and other things
+	- They encourage us to use these to create test systems
+
+========Proof of concept========
+	- They have Try it now systems avaliable to us
+	- It is a download and try 
+	- it will install a couple of VMs for us to play around with
+	- they expire after 30,60,90 days
+	- we have a sucess document(?)
+	- they also have a guidelines for different deployment modles
+	- They are going to tech us how HBA, NICs and CPUs work?
+
+
+
+========Server Builds | Bill of Materials========
+This is to allow us to design systems that will be what we later deploy to the client
+	- they prefer 2 sockets motherboards, as it allows for me PCI slots
+	- it is important to 1:1:1 between the logical processor, schedulor and channel
+	- A Channel is anywhere a datacore driver is bound
+	- Different types of channels:
+		- Front end
+		- Mirror 
+		- Backend
+		- Loopback 
+CPU
+	We are talking asbout port roles when talking about CPU
+	- it is important we assign a logical CPU (Core?) to each port and schedulor pair (2 Mirrors, 2 for prod would need 4 logical processors)
+	- It is then important to then accound for any VMs that will be on the device as well to allow for the above as well.
+	- This is important to do during the design proccess
+	- For example if it is just acting as a stand alone SAN then we can not worry about the VMs but then if it is converged you will need to consider
+	the logical CPU count
+RAM
+	- is used for caching instead of drives
+	- minimum of 8 GBs
+	- 128-256GBs is the sweetspot but again you need to consider the total ammount of RAM consumed by the system.
+	- the true answer on the ammount of RAM is based on the workload. We want to match the workload to the to the ammount of resoruses in the system
+	traditional converged models
+	- based on the deployment model
+	- port is anything ISCUSI, fibre, or network port
+	- We have mirrrors, targets, backend
+	Storage target
+	- required at least two ports of redunancy
+Mirror 
+	- we are going to have redunancy with these to have at least two of these connections
+	- traffic is going to be dedicated to the datacore mirroring.
+	- they will only use mirrored ports for any of this traffic and nothing else
+Frontend (inter-engine communications)
+	- Traffic we will have a recommended 2 ports for this
+External Storage 
+	- we have the ability to agrogate all fibre and iscsi connections 
+	- additionally we have a requirement of 2 ports
+	Ports for hyper-converged deployment:
+VM/application communications
+	- same requirements as above however for VM/application communications they require two ports of redunancy
+	this is as hypervisors required additional communications to allow transitions between servers etc
+	Cluster communications
+	- requires 2 redunant ports again
+Disks
+	- Buses are important to understand
+	- a PCIE bus is a lot after than a SAS bus is faster than a sata bus
+	- We find our selfs considering all of the above with profromance in mind.
+	- All drives are considered differently
+	- Building the system we need to make sure that we have 
+	- mirrored setup for the OS esxi, or windows installation onto the bear metal
+	- This needs to be kept seperate to the rest of the storage
+Raid groups: 
+	- rebuild times are effected by drive size
+	- Drives greater than 2TB raid groups should be limited to 6 drives or less
+	- Drives that are less than 2TB raid groups should be limited to a max of 8 drives
+	- High cap drives 6,8,10 we can consider a RAID 1/10
+	- from a performance  side of view, more drives will increase performance  from within its own pool
+Auto-Tiering
+	- is something that we could never have been able to do before
+	- now we are able have different types of drives site in the same pool of storage
+	- this is possible because we are using RAM for the Caching
+	- Tier 1: is very important. 3%-5% text book 5%-10% from the instructor. This should be flash or SSD for Highest performance 
+	- Tier 2: High performance  SAS disks (15k drives)
+	- Tier 3: Moderate performance  drives such as NL-SAS
+	- Tier 4: Slow class SATA and "Internal storage"
+	- The idea is to have the drives with the best metrics at the top levels
+	- We need to have all of the above in mind when designing the system.
+	- more tiers the better performance 
+Race car RAID rules
+	- building raids you have segment sizes within this
+	- if you are building a raid 5,6,1,10 there are mathimatical way to find the size of a segment
+	- Raid-5 = (1024KB)/(#number of disks in RAID 5 - 1) rounded up to nearest supported vaule
+	- Raid-6 = (1024KB)/(#number of disks in RAID 5 - 2) rounded up to nearest supported vaule
+	- Raid-1 = Max supported by RAID controller up to 1MB
+	- Raid-10 = (1024KB)/(# RAID-1 pairs in the RAID-10 group) rounded up to nearest supported vaule
+Asybchronous Replication, Snapshot, or CDP
+	- it is recommended to use different physical disks for these functions seperate from the disk pools
+	- not capacity drives and they need to be kept seperate from the rest of the system.
+	- Asybchronous Replication requires a buffer drive to convert from block to file and that is just an NTFS volume which need to be fast.
+	- 
+
+
+
+========Best practice========
+	- keep it simple, it can get too complicated
+	- avoid single points of failure
+	- Keep storage seperate, dont have everything assigned to one 
+	- Document and share with coworkers 
+	- Control who has access to the system
+	- Qualified lists of hardware
+	- Known issues in the FAQ (1277)
+	FAQs
+	- FAQ 1348 is for best practice
+	- FAQ 1529 Qualified lists 
+	- Subscribe to FAQ 838 for all critical 
+	- Keep systems up to date, windows, drivers, bios.
+Server coinfig
+	- They have recommendations for all of the following server configurations:
+	Bios
+		- FAQ 1467 for recommended BIOS settings
+	Memory
+		- FAQ 1543 for 
+	CPU
+		- CPU core per port +1 for preformance recording +2 Replication
+		- This means that for each port, if you want performance  monmitoring and replication you need 3
+	Power
+		- UPS on servers, switches, Arrays
+		- Set for high performance  and no power saving
+Bios
+	Disable turbo boost
+	disable C states
+	enable eary snoop option
+	statically set high performance  mode, and disable any CPU powersaving modes
+iSCSI & FC
+	They both work, 
+	firbre channel is profored as it is 2nd layer
+	it is plug and play
+	direct connecting it just works
+	firbre on mirror ports and added bonus is it keeps everything away from production as fibre is by design this way
+	
+	They have their own drivers for fibre and iSCSI but not for is microsoft iSCSI initiator
+	So they have target drivers for target and initators except for iSCSI which they just use the microsoft initiator for.
+	They are capliable to be a target and an initator and then also present as a target	
+Lan
+	You need to consider all of the ports that you will need to make use of
+	Server Group Controller Node
+		- Automatic decision
+		- controls sending configuration changes to other nodes
+		- needs TCP/IP to all other nodes
+	Other TCP/IP connections
+		- Management console
+		- Vcenter console 
+		- performance  recording
+		- Replication
+		- Seperate network connection for each function 
+		- NIC teaming
+		- Email & SNMP Monitoring
+	We have out of band manage ment
+	we are going to have DHCP
+	You need to make sure that you have enough lan ports for everything
+
+Windows
+	- Update tuesday, avoid keeping it super up to date
+	- Upgrade one machine at a time, 
+	- Never to complete automatic updates.
+	- Kernal dumpfile - not useful
+	- pagefile not used
+	- make sure that the time is acurate 
+	- make sure that we always backup you host file and that they are actuate
+	- make sure that windows is set to high performance 
+Network design
+	- Cabling
+		- Increase network speed = decrease network distance
+		- Use the right cable at the right speed & the right distance
+	- Bandwidth
+		- Higher bandwith = lower latency 
+		- keep latency low as VMs will die
+		- They have a powershell script that can set best practices for your iSCSI configuration
+TCP/IP
+	- They have FAQs on this FAQ 1467 
+	- FAQ on best practices FAQ 1626
+Server 2012 
+	- we have the ability to 
+	- Disable IPv6 and removing any other checkboxes
+	- disable adapter power saving 
+========What Disk Type========
+Flash
+	- Pros
+		- Low cost per IOPS
+		- performance  is primary driver
+		- High performance 
+		- low power needs
+	- Cons
+		- High cost per GBs
+		- Expensive initial procurment
+SAS 
+	- Pros
+		- Low cost per GB
+		- Cap is primary Driver
+		- Long history of reliability
+	- Cons
+		- High cost per IOPS
+		- Used alone poor performance 
+		- high power needs
+SATA
+	- Pros
+		- Lowest cost per GB
+		- Capacity is primary driver
+	- Cons
+		- High cost per IOPS
+		- Used alone, poor performance 
+		- High Power needs
+		- ATA Commands, half duplex
+========RAID========
+DataCore does not raid, they just see the virtual disks presented to the OS. 
+
+Functional IOPS = RAW IOPS * Write% /RAID Penalty + RAW IOPS* Read %
+
+Maker sure to set your RAID correctly to allow for the most falures 
+RAID 1 (10)
+	- Pros
+		- Low write Penalty
+		- Redundancy
+		- Write-intensive Apps
+	- Cons
+		- 50% total cap
+		- Read performance 
+Raid 5
+	- Pros
+		- Redundancy (n-1)
+		- Read preformance
+		- High Capacity 
+		- Read-intensive apps. medium write-intensive apps
+	- Cons
+		- Write penalty (1:4)
+		- External Rebuild time 
+Raid 6
+	- Pros
+		- Redundancy (n-2)
+		- No Rebuild impact if one Disk fails
+		- Archival data on big and slow disks
+	- cons
+		- Performance (~80% of RAID 5)
+		- Write Penalty 1:6
+RAID Does and donts
+	- Strip size
+	- 4+1 disks/Raid-5 -> max. Stripe Size 256k = (4x256) Strip set of 1MB
+	- Use RAID Sizing calc 
+========HBA Performance========
+Use fibre where posible as the Performance si better and it is not a TCP/IP related device.
+	- FC HBA Performance
+
+
+
+
+Only difference between st and en is fibre channel support, SMPA shared multiport array 
+
+DataCore can use physical channels (FC and iSCSI) as well as virtual loopback channels (for locally resident applications and services) to drive storage I/O.
+Several factors will influence the number of channels needed,
+but in general, increasing the number of channels increases the number of queues,
+the number of potential schedulers, total bandwidth, and the degree of parallelization.

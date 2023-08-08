@@ -1,0 +1,120 @@
+DataCore SDS can be installed on bare-metal and/or a virtual machine
+True
+
+
+Which one of the following is considered a valid DataCore-based channel
+All
+
+A mirrored virtual disk will not log write changes when
+One of the datacore SDS nodes becomes unavalaible
+
+The DCSA course is intended to
+train you to design
+
+DataCore SANsymphony can be freely downloaded and installed as a fully functional trial for 30 days.
+true
+
+DataCore SDS can be either an initiator or a target, but not both at the same time
+False
+
+The Continuous Data Protection feature
+Allows virtual disks to be restored to a point-in-time
+
+DataCore SDS forms a 1 : 1 : 1 relationship between
+logical processor, scheduler, and datacore channel
+
+When sizing the capacity of tier-1 (SSD/flash) in the DataCore Disk Pool, which is a good initial range to use?
+5-10%
+
+8Gb Fibre Channel is capable of lower latency than 10Gb iSCSI
+true
+
+How many DataCore SDS nodes can exist within a single server or management group?
+64
+
+Mirror channels can use
+iSCSI and fibre channel
+
+Random write accelerator
+Organises random writes into a sequential log when writing to the disk
+
+Which documents are required for a proper deployment?
+All of these
+
+DataCore SANsymphony can be used as a migration tool to migrate from an old array to a new array.
+true
+
+DataCore SANsymphony is licensed by:
+Usable capacity
+
+DataCore SANsymphony offers the following RAID levels for disks in the pool:
+RAID 1
+
+Asynchronous replication
+Supports (...)from a virtual disk context
+
+DataCore Auto-Tiering supports up to
+15
+
+DataCore invented thin-provisioning
+true
+
+Which one of the following features has the largest impact on performance?
+Auto-Tiering
+
+If only two DataCore SDS nodes are deployed and a switch is not necessary for the mirror channels, it is best to use
+iSCSI and/or FC directly between the nodes
+
+DataCore SDS only supports RAID'ed disks in the pool
+False
+
+When preparing for an install, the equipment bill of materials:
+Should be used as a component of the site pre
+
+Best Practices indicate the following (select the best option)
+All of these
+
+Which of the following is true of DataCore Snapshots
+Supports both copy-on-write differential and full snapshots
+
+When running DataCore SDS within a virtual machine, which hypervisors are supported?
+all of these
+
+Select one way to increase the degree of parallelization with a DataCore SDS system
+increase number of target channel
+
+A general rule when sizing CPUs is
+1 logical processor per channel +1
+
+Does DataCore SDS use RAM for cache?
+true
+
+A single DataCore Disk Pool can contain
+all of these
+
+DataCore SDS can
+Pool disks together regardless of manu
+
+DataCore ST-licenses only allow hyperconverged installations
+false
+
+When a single storage array is shared active-active between two DataCore SDS nodes, it is called
+sharred multiport array
+
+When would the use of a "pass-through" disk be the most applicable?
+When using replication
+
+Which BIOS settings are recommended to achieve optimal system performance?
+all of these
+
+A minimum of two DataCore SDS servers is required to enable synchronous mirroring
+true
+
+DataCore SANsymphony can be deployed as a virtual machine.
+true
+
+Synchronous Mirroring
+All of these
+
+A physical disk in DataCore SDS is
+any block device 

@@ -1,0 +1,346 @@
+Alex Baxter : 31/08/2020
+Alex Baxter : 31/08/2020
+Veeam Availability Suite v10 training
+
+There will be a focus on lab but there will be no us of the lab docs
+
+Key components:
+	- Backup server 
+		Coordinates backup, replication, recovery verification and restore taks
+		
+		It controls job secuduling and resource allocation
+		
+		Is used to set up and manage backup infrastructure components, as well as to specify global settings for the backup infrastructure
+		
+		in additional to its primary finctions a newly deployed backup server also performs the roles of the default backup proxy and the backup repository (it manages data handling and data storing tasks)
+	- Proxy server
+		Retrieving VM data from the production storage
+		
+		Compressing
+		
+		Deduplicating
+		
+		Encrypting
+		
+		Sending data to the backup repository or another backup proxy
+		
+		There are different types of Proxies (Virtual and Physical)
+		
+		The reason for using a Physical box is that you get the greatest transfer and it also recudes the load on the load on the host.
+		
+		Proxies in Hyper-V has to the host. They can also use a VM but you need to make sure that they are no a clustered VM so it can gain access to the storage.
+		
+		proxie provides information on where the VM storage is and is a part of directing to the point to restore
+		
+	- Backup repository
+		Direct attached storage
+			You can add virtual and physical servers as backup repositories both Microsoft Windows Servers and Linux Servers.
+		
+		Network attached storage
+			Network attached storage. Ypu can add CIFS (SMB) shares as backup repositories.
+		Deduplicating storage appliances
+		
+		Object storage 
+			You can use cloud storage services as backup repositories.
+	- Mount server
+		- any device that has the VBR console has the mount console
+	-	The veeam repositories for storage gets automatically created on the drive with the greatest ammount of space
+		
+- VBR console also 
+Overview of what can be protected
+	- vSphere (vCenter, ESXi)
+	- Hyper-V (SCVMM. Server)
+	- Acropolis Hypervisor (Prism)
+	- NAS (SMB, NFS, Windows or Linux manager file server share)
+	- Agents (Windows, Linux)
+RTO/RPO 
+	How much data are you prepared to lose?
+	- Recovery time objective
+		Amount of time within which a system must be recovered after an outage
+	- Recovery point objective
+		Point in time to which system's data must be reovered after an outage
+3-2-1 rule
+	- We must have 3 copies of our data
+	- one site in production, one site in backup, and one off site
+	- They should be in different media, for example tape, drives and object
+What can we backup?
+	- Virtual Machines
+	- Physical machines
+	- Cloud workloads 
+	- File shares
+Backup retention
+	- 30 years after the death of an inmate
+	- most are 7 years
+	
+Arcutecture: 
+	- backup to proxie
+	- proxie to host
+	- host to proxie where the data is on the disk
+	
+Creating a backup job: 
+	- Backup job, virtual machine, and select the type of VM
+	- name the process 
+	- add the virtual machine from the inventory
+	- we can group backups
+	- reasoning is that we backup
+		Group simular VMs
+		Group all VMs that need the same frequency of backup
+		Easier to manage fewer jobs
+		Group the same OSs where possible 
+		Group the same kinds of workloads where possible
+		You can mix and match machines
+		You can order the machines to have them backup in the order
+	- You can manually select a proxy but it will allow you to manually select
+	- You can select restore points or the number of days
+		number of days is eaiser
+	- GfS can be used to create archievable backups
+	- we have an option to create a secondary backups as well
+	- you can define things to be backuped up to a "tiering" of storage to copy off the old backups to other storage
+GFS flags a backup from a incremental and will keep backups from that with a level granuality  
+
+.vib is an incremental backup file
+.vbk is a full backup
+
+We set flags to basically indicate the 
+
+Incremental backup: 
+	- take an inital backup and incremental for each backup point
+Reverse incremental backup
+	- takes a full backup and leave incremtal backups in the pass and need to merge them to restore
+	
+	- Reserse incremental is a faster option alot of time as you are restroing from a more recent full
+	- update not actually after as all is the same due to metadata processing
+	
+	Backup job modes
+	reverse incrementals
+	takes the changes and creates a copy of the before
+	Retention is based off of the number of times the backups will be kept for example, retention of 4 means daily backups, after 5 days day 1 will be deleted.
+	
+	backup job modes
+	forward incrementals backups
+	with the incremental backups retention it will move the backup forward an incremental backup deleting that.
+	
+	The speed of restore is the same using either
+	Forever forward is the standard with the incremental backups being absorbed by the master backup
+	
+	Forward incremental 
+	you need to be mindful that a forward incremental can not clear any of the old data until there are the number of restore points.
+	
+	Restore point simular, great for system calculation
+	http://rps.dewin.me
+	http://rps.dewin.me/bandwidth/
+	
+	Active full is all taken from production storage. This will load the host.
+	
+	Synthetic full backup will be taken from the repositories with no load on the host. 
+	Basically it takes the initial backup repository and then just restores 
+	
+	Transforming incremental backup chains (will be getting removed in a new versions)
+		- it will leave a changed block as a seperate file
+		- good for long backup chains
+		
+	Backup job modes 
+		- Cons and Pros
+			forever forward incremental	forward incremental	Reverse incremental
+	Change block tracking
+		- this is native to VMware
+		- this has its own implementation that has come into 2012r2 (wlll need to check) (RCT or Resilient change tracking)
+	Data size optimization
+		- basically looks at taking backups with only the changes
+		- exclude deleted files and page files
+		- typically uses Optiomal (lz4)
+		- Is located under options and advanced 
+		- you need the enterprise management
+	enterprise management 
+		- it sits on the top and interfaces with all of the servers it is a cross platform thing
+	Guess interation Proxy 
+		- deploys application aware processing 
+		- guest file system indexing
+		- transaction log processing
+		- windows only (Linux uses backup server)
+	Creating a VM backup
+		- Automatic startup schedule
+		- Backup window
+		- Automatic job retry (come back and look at)
+	You need to create 
+		- dont chain jobs
+		- let the proxy server determine the backup schedule
+		- the proxy will choose the best and will operate the best that it can
+	Proxy: one task = one virtual disk
+	10 VMs, 10 task, 10 CPUs cores, 10 disks
+		- Max concurrent tasks: will be the number of task run at the same time
+		- make sure that it is the number of cores on the proxy -1 for the OS
+			6 cores 5 Max concurrent tasks.
+	VMWare Datastore snap shot default is 4 
+	VMWare snapshops can also be limited as well
+	
+	Backups fail: 
+		- Confirm that you can take a snapshot manually
+		- test with VMware tools Quiescence if enable in job
+		- If snapshops creations fail, VMware should be involved
+		- Some settings within VMware can prevent snapshots
+		- Veeam related snapshots are removed by the job
+		- Snapshot Hunter tracks and consolidates Veeam snapshots
+		- If manual removal of snapshot fails involve VMware support
+		- Attempting to rebooting host during snapshot removal may result in data lost
+
+Lab 1: 
+	- setup links to hosts and created storage repository
+	- setup backup jobs with options
+	
+	Instant recovery cache
+		- You create a cache but you want to be mindful of where you are storing this 
+		
+Agent backups
+	- Veeam agents are used when you can not snapshot
+	- Physical servers
+	- Azure
+	Distrbution server	
+		- we can have seperate distribution server
+		- this will then distribute to the other physical server
+	Protection group
+		- is what you want it to be
+		- it can be defined how you wish, using anything from a text file to OU in AD
+		- Can be static or dynamic, it will also check to update the list of servers
+		- the distribution server will deploy the agent to the servers
+		- you will need to make sure to define all of the options
+		- Make sure that you reboot the machine after installing the CBT driver
+		- You can define the bandwidth 
+		- you need to need to define if it is handled by the server or by the agent
+		- stable connection do it by server
+		- laptop manage by agent
+	what can be backuped up?
+		- windows fail over cluster, workstation and server
+		- Linux orkstation and server
+	Failover cluster does not have the option to be backuped from agent (dorh)
+	agents do not support reverse incremental backup jobs!!!
+	We have explores but not for mysql or postgres
+	You can use application aware processing
+	
+	Lab 
+		- make sure to deselect!!!!
+		
+File share backup
+	- this is used to back up file shares
+	- new feature is the Cache repository
+	file proxy 
+		- Proccesses jobs
+		- delivers backup and restore traffic
+		- Window Server (No Linux)
+	Ceche repository
+		- it backups 64mb chunks through check somes
+		- store in Memory
+		- it will keep use the one closest to the server
+	What can we backup
+		- Windows
+		- Linux
+		- NFS v3, v4.1 
+		- smb v1, v2, v3
+	Lock files will be skipped and retried
+		- it will not error! just add to the log
+	Retention options - short term retention
+		- New NAS backup format
+		- Capacity in days or month
+	changes get stored in store term and the files that are changed get moved to long term reention
+	ISO and other static files do not get archived until they are deleted.
+	one backup of a file gets storged per day, 
+	
+	Permissions are defaulted to just folder level but options to go to file level:
+		- be mindful of this
+	
+	Full backups are done by checking the cache repository and comparing it to the short term and update the short term with these files.
+	all changes will then also be written to long term 
+	Files:
+		- .vstore XML meta data file that discribes the back up
+		- .vsource 
+		- finish this!!!!!!
+	Locked files will be skipped
+	
+	Linux file share do not have a file proxy as the server itself will complete this itself
+	
+	No errors or warnings we have completed it sucessfully
+	
+	If you have issues with Veeam, check the fourms and subscribe to the newsletter (words from Gostebe)
+	
+Enviroment configuration
+	- general options (Burger menu)
+	- Storage latency control can be controled through I/O control, you can then also throttle as well as limit the new job assignment on the datastore.
+	- Email notiforcations
+		- set SMTP server
+		- create message template
+		- The option will suppress notiforcation until jobs done plus plus
+	- notiforcations
+		- automatically get notiforcation
+		- it will warned on LDS, Support contract, new updates for hyper-v, Veeam updates
+		- Skip VM processing when free disk space is below %placeholder%%
+	- datalocation tags
+		- they are a warning message when you backup to a particular location
+Restoring from a backup
+	- Instant VM recovery
+		- lower proformace but faster to restore
+		- Restarts the VMs directly from a backup fiile in a matter so seconds
+		- Uses exisiting backups and backup storage
+		- Keeps uers working while you troubleshooting
+		- restores to original location or new location with different settings
+		- Hyper-V works differently to VMware
+			- Hyper-V
+				- You mount the virtual disk to Hyper-V instance. 
+				- it will always get mounted to the production enviroment
+				- Finalisation is quicker as reads are logged to the VHD
+				- Hyper-V can instant recovery:
+					- Microsoft Hyper-V virtual machines
+					- Virtual and Physical machines created with Veeam agnt
+					- Nutanix AHV virtual machines
+			- VMWare 
+				- it will us vPower to start the instant VM onto the live enviroment from the backup enviroment
+				- The place the VM is resigtered to will be the temp location 
+				- suspends the backup incremental
+				- everything can be recovered into vShpere
+	- Full VM recovery
+		- slower to restore but better proformance
+		- Quick rollback can be a faster option (avaliable for both Hyper-V and VMware
+		- works with
+			- VMware anything
+			- Hyper-V Hyper-V and agent
+			- AWS/Azure VMware, Hyper-V and Agent
+			- Bare Metal Agent
+	- Secure restore
+		- used for Malware
+		- will not be mounted on your machine
+		- will most likely happen on a approprate proxy
+		- what do we do
+			- we select the restore point
+			- mount disks directly from the backup file to mount server
+			- Anti-virus check: AntivirusInfo.xml contains powershell commands plus exit codes
+			- the a desicion is made:
+				- No infectous found, continue to restore
+				- infection found proceed recovery but disable network
+				- infection found; stop restore
+		- Individual VM files can be recovered
+	- Bare metal recovery
+		- 'They just work' - Lewis 2020
+		- backup is taken with the agent and can then be restored to the server
+	
+	
+
+Hint for exam: 
+	- know all of the default options for the exam, meaning all of the backup and restore/build
+	- make sure to be aware of both htper-v as well as VMWare
+	- The veeam repositories for storage gets automatically created on the drive with the greatest ammount of space
+	- Any device that has the VBR console has the mount console
+	- The virtual machine is not running on a snapshot when creating a full synthetic
+	- the max restore points is 999
+	- file extention
+		- .VBK full backup stores copies of full vms images
+		- .vib or vrb backup increment Stores incremental chnages to VM images
+		- .vlb Transactional log backups
+		- .vom or vsm Transaction log metadata Stores Oracle/SQL server 
+		- please complete!!!!!!!!!!!!!!!!
+	- Make sure that you reboot the machine after installing the CBT driver
+	- agents do not support reverse incremental backup jobs!!!
+	- everything can be recovered into vShpere
+	- Hyper-V can instant recovery:
+		- Microsoft Hyper-V virtual machines
+		- Virtual and Physical machines created with Veeam agnt
+		- Nutanix AHV virtual machines
+	- ReFs
